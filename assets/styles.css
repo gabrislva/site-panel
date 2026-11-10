@@ -385,3 +385,15 @@ a.btn { text-decoration: none; display: inline-flex; align-items: center; justif
 body { min-height: 100vh; display: flex; flex-direction: column; }
 .pagina, .portal, .login-wrap { width: 100%; padding-bottom: 72px; }
 .rodape { margin-top: auto; }
+
+/* Revisão de reembolso e gestão de membros */
+.st-Emrevisao { background: #ffe8cc; color: #8a3b00; }
+.pedido.revisar { border-color: #8a3b00; box-shadow: 4px 4px 0 #8a3b00; }
+.resumo { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.papel-Membro { background: #fff; color: var(--ink); }
+.papel-Financeiro { background: #e2ebf8; color: #24508f; }
+.papel-Admin { background: var(--amarelo); color: var(--ink); }
+.check { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; cursor: pointer; }
+.check input { width: 20px; height: 20px; min-height: 0; accent-color: var(--red); }
+select:disabled { opacity: .6; }
+.det .grade { gap: 14px; }
