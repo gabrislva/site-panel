@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Mono:wght@500&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
-<link rel="stylesheet" href="assets/styles.css?v=1">
+<link rel="stylesheet" href="assets/styles.css?v=2">
 </head>
 <body data-pagina="membros">
 <div id="topo"></div>
@@ -38,7 +38,8 @@
     <button type="button" data-aba="inicio"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Início</button>
     <button type="button" data-aba="novo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Pedir reembolso</button>
     <button type="button" data-aba="meus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Meus pedidos</button>
-    <button type="button" data-aba="aprovar" data-papeis="Aprovador,Financeiro,Admin" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Aprovar reembolsos</button>
+    <button type="button" data-aba="aprovar" data-papeis="Financeiro,Admin" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gerenciar reembolsos</button>
+    <button type="button" data-aba="membros" data-papeis="Admin" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.2 2.6 3.6 5.5"/></svg>Membros</button>
     <button type="button" data-aba="conta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Minha conta</button>
     <button type="button" class="sair" id="b-sair"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h4v16h-4"/><path d="M10 8l-4 4 4 4M6 12h10"/></svg>Sair</button>
   </nav>
@@ -53,7 +54,7 @@
         <div class="atalhos">
           <button class="atalho" type="button" data-ir="novo"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><b>Pedir reembolso</b><span>Pagou algo pela instituição? Envie o comprovante.</span></button>
           <button class="atalho" type="button" data-ir="meus"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span><b>Meus pedidos</b><span>Veja o status dos seus reembolsos.</span></button>
-          <button class="atalho" type="button" data-ir="aprovar" data-papeis="Aprovador,Financeiro,Admin" hidden><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b>Aprovar reembolsos</b><span id="at-pend">Pedidos esperando análise.</span></button>
+          <button class="atalho" type="button" data-ir="aprovar" data-papeis="Financeiro,Admin" hidden><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b>Gerenciar reembolsos</b><span id="at-pend">Pedidos esperando você.</span></button>
         </div>
         <div class="painel-head"><h2>Mural de avisos</h2></div>
         <div class="avisos" id="avisos"></div>
@@ -65,8 +66,9 @@
       <div class="cartao" id="rb-form-wrap">
         <header>
           <span class="eyebrow">Reembolso</span>
-          <h2>Pedir reembolso</h2>
-          <p>Preencha os dados da despesa e anexe a nota ou recibo. Seu nome e e-mail já vão junto.</p>
+          <h2 id="rb-titulo">Pedir reembolso</h2>
+          <p id="rb-sub">Preencha os dados da despesa e anexe a nota ou recibo. Seu nome e e-mail já vão junto.</p>
+          <div class="aviso info" id="rb-revisao" hidden></div>
         </header>
         <form id="f-rb" class="grade" novalidate>
           <div class="campo"><label for="rb-projeto">Projeto ou setor</label><select id="rb-projeto" required><option value="">Carregando…</option></select></div>
@@ -74,16 +76,16 @@
           <div class="campo"><label for="rb-data">Data da despesa</label><input id="rb-data" type="date" required></div>
           <div class="campo"><label for="rb-valor">Valor</label><div class="prefixo"><span>R$</span><input id="rb-valor" inputmode="decimal" placeholder="0,00" required></div></div>
           <div class="campo inteiro"><label for="rb-desc">Descrição</label><textarea id="rb-desc" placeholder="Ex.: Uber da sede até o ginásio para montar o evento de 12/11." required></textarea></div>
-          <div class="campo inteiro"><label for="rb-arq">Comprovante (PDF, JPG ou PNG, até 10 MB)</label><input id="rb-arq" type="file" accept="application/pdf,image/jpeg,image/png,image/webp,image/heic" required></div>
+          <div class="campo inteiro"><label for="rb-arq" id="rb-arq-rot">Comprovante (PDF, JPG ou PNG, até 10 MB)</label><input id="rb-arq" type="file" accept="application/pdf,image/jpeg,image/png,image/webp,image/heic" required></div>
           <div class="campo"><label for="rb-pix">Chave PIX</label><input id="rb-pix" placeholder="CPF, e-mail, telefone ou aleatória"></div>
           <div class="campo"><label for="rb-banco">Ou dados bancários</label><input id="rb-banco" placeholder="Banco, agência e conta"></div>
           <div id="rb-erro" class="aviso erro inteiro" hidden role="alert"></div>
-          <div class="acoes inteiro"><button class="btn grande" id="rb-enviar" type="submit">Enviar pedido</button></div>
+          <div class="acoes inteiro"><button class="btn grande" id="rb-enviar" type="submit">Enviar pedido</button><button class="btn sec" id="rb-cancelar" type="button" hidden>Cancelar correção</button></div>
         </form>
       </div>
       <div class="cartao" id="rb-ok" hidden>
         <div class="recibo">
-          <span class="nota">Pedido enviado! Seu protocolo:</span>
+          <span class="nota" id="rb-ok-txt">Pedido enviado! Seu protocolo:</span>
           <span class="protocolo" id="rb-protocolo"></span>
           <p class="nota">Você recebe um e-mail quando o pedido for analisado.</p>
           <div class="acoes"><button class="btn sec" type="button" data-ir="meus">Ver meus pedidos</button><button class="btn" type="button" id="rb-novo">Fazer outro pedido</button></div>
@@ -103,7 +105,7 @@
     <section data-painel="aprovar" hidden>
       <div class="painel">
         <div class="painel-head" style="display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap">
-          <div style="display:grid;gap:6px"><span class="eyebrow">Reembolso · aprovação</span><h2>Aprovar reembolsos</h2></div>
+          <div style="display:grid;gap:6px"><span class="eyebrow">Reembolso · gestão</span><h2>Gerenciar reembolsos</h2><p class="nota" id="ap-dica"></p></div>
           <div class="acoes"><button class="btn sec peq" id="ap-atualizar" type="button">Atualizar</button><button class="btn sec peq" id="ap-csv" type="button">Exportar CSV</button></div>
         </div>
         <div class="resumo" id="ap-resumo"></div>
@@ -117,6 +119,24 @@
             <tbody id="ap-linhas"></tbody>
           </table>
           <div class="vazio" id="ap-vazio" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Membros (Admin) -->
+    <section data-painel="membros" hidden>
+      <div class="painel">
+        <div class="painel-head" style="display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap">
+          <div style="display:grid;gap:6px"><span class="eyebrow">Administração</span><h2>Membros</h2><p class="nota">Quem pode entrar na Área do membro e o que cada um pode fazer.</p></div>
+          <div class="acoes"><button class="btn sec peq" id="mb-atualizar" type="button">Atualizar</button><button class="btn peq" id="mb-novo" type="button">+ Adicionar membro</button></div>
+        </div>
+        <div class="filtros"><input id="mb-busca" type="search" placeholder="Buscar por nome ou e-mail" aria-label="Buscar membro"></div>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Nome</th><th>E-mail</th><th>Papel</th><th>Acesso</th><th>Último acesso</th></tr></thead>
+            <tbody id="mb-linhas"></tbody>
+          </table>
+          <div class="vazio" id="mb-vazio" hidden></div>
         </div>
       </div>
     </section>
@@ -151,17 +171,45 @@
   </div>
 </dialog>
 
+<dialog id="dlg-membro" aria-labelledby="m-titulo">
+  <form class="det" id="f-membro" novalidate>
+    <header>
+      <h2 id="m-titulo">Adicionar membro</h2>
+      <button class="fechar" id="m-fechar" type="button" aria-label="Fechar">×</button>
+    </header>
+    <div class="grade">
+      <div class="campo inteiro"><label for="m-nome">Nome</label><input id="m-nome" autocomplete="off"></div>
+      <div class="campo inteiro"><label for="m-email">E-mail</label><input id="m-email" type="email" autocomplete="off"></div>
+      <div class="campo"><label for="m-papel">Papel</label>
+        <select id="m-papel"><option value="Membro">Membro</option><option value="Financeiro">Financeiro</option><option value="Admin">Admin</option></select>
+        <span class="dica" id="m-papel-dica"></span></div>
+      <div class="campo"><label for="m-ativo">Acesso</label>
+        <select id="m-ativo"><option value="sim">Ativo (pode entrar)</option><option value="nao">Bloqueado</option></select></div>
+      <div class="campo inteiro"><label for="m-senha" id="m-senha-rot">Senha</label>
+        <div class="filtros"><input id="m-senha" autocomplete="off" placeholder="Mínimo 6 caracteres"><button class="btn sec peq" id="m-gerar" type="button" style="flex:0 0 auto">Gerar senha</button></div>
+        <span class="dica" id="m-senha-dica"></span></div>
+      <label class="check inteiro"><input type="checkbox" id="m-enviar" checked> Enviar e-mail para a pessoa com o login e a senha</label>
+    </div>
+    <div id="m-erro" class="aviso erro" hidden role="alert"></div>
+    <div class="acoes" style="justify-content:space-between">
+      <button class="btn sec" id="m-remover" type="button" hidden>Remover membro</button>
+      <button class="btn" id="m-salvar" type="submit">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
 <footer id="rodape"></footer>
-<script src="config.js?v=1"></script>
-<script src="conteudo.js?v=1"></script>
-<script src="assets/api.js?v=1"></script>
-<script src="assets/site.js?v=1"></script>
+<script src="config.js?v=2"></script>
+<script src="conteudo.js?v=2"></script>
+<script src="assets/api.js?v=2"></script>
+<script src="assets/site.js?v=2"></script>
 <script>
 (function () {
   const $ = id => document.getElementById(id);
   const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
 
   let token = '', perfil = null, pedidos = [], filtroStatus = 'Pendente', atual = null, rbCfgCarregada = false;
+  let correcao = null, manterCorrecao = false, membros = [], membroAtual = null;
   try { token = localStorage.getItem('portal-token') || ''; } catch (e) {}
   const guardar = t => { token = t; try { t ? localStorage.setItem('portal-token', t) : localStorage.removeItem('portal-token'); } catch (e) {} };
 
@@ -197,6 +245,7 @@
   async function abrirPortal() {
     const r = await api('eu');
     perfil = r.perfil;
+    filtroStatus = perfil.papel === 'Admin' ? 'Aprovado' : 'Pendente';
     $('tela-login').hidden = true; $('tela-portal').hidden = false;
     $('p-nome').textContent = perfil.nome || perfil.email; $('p-email').textContent = perfil.email; $('p-papel').textContent = perfil.papel;
     $('ola').textContent = 'Olá, ' + (perfil.nome || '').split(' ')[0] + '!';
@@ -209,16 +258,19 @@
     if (podeAprovar()) carregarAprovacao(true);
     rota();
   }
-  const podeAprovar = () => perfil && ['Aprovador', 'Financeiro', 'Admin'].indexOf(perfil.papel) >= 0;
+  const podeAprovar = () => perfil && ['Financeiro', 'Admin'].indexOf(perfil.papel) >= 0;
+  const ehAdmin = () => perfil && perfil.papel === 'Admin';
 
   /* ---------- Navegação (#inicio, #novo, #meus, #aprovar, #conta) ---------- */
   function rota() {
     if (!perfil) return;
     let aba = location.hash.slice(1) || 'inicio';
-    if (!document.querySelector('[data-painel="' + aba + '"]') || (aba === 'aprovar' && !podeAprovar())) aba = 'inicio';
+    if (!document.querySelector('[data-painel="' + aba + '"]') || (aba === 'aprovar' && !podeAprovar()) || (aba === 'membros' && !ehAdmin())) aba = 'inicio';
     document.querySelectorAll('[data-painel]').forEach(s => s.hidden = s.dataset.painel !== aba);
     document.querySelectorAll('.lado [data-aba]').forEach(b => b.setAttribute('aria-current', String(b.dataset.aba === aba)));
-    if (aba === 'novo') carregarRbConfig();
+    if (aba === 'novo') { carregarRbConfig(); if (manterCorrecao) manterCorrecao = false; else if (correcao) sairCorrecao(); }
+    else if (correcao) sairCorrecao();
+    if (aba === 'membros') carregarMembros();
     if (aba === 'meus') carregarMeus();
     if (aba === 'aprovar') carregarAprovacao();
   }
@@ -233,11 +285,14 @@
     sel.innerHTML = ''; const v = el('option', '', 'Selecione…'); v.value = ''; sel.appendChild(v);
     itens.forEach(i => { const o = el('option', '', i); o.value = i; sel.appendChild(o); });
   }
-  async function carregarRbConfig() {
-    if (rbCfgCarregada) return;
-    $('rb-data').max = new Date().toISOString().slice(0, 10);
-    try { const c = await api('rbConfig'); preencher($('rb-projeto'), c.projetos); preencher($('rb-categoria'), c.categorias); rbCfgCarregada = true; }
-    catch (e) { $('rb-erro').textContent = e.message; $('rb-erro').hidden = false; }
+  // Carrega projetos e categorias uma vez só (chamadas simultâneas esperam a mesma resposta)
+  function carregarRbConfig() {
+    if (!rbCfgCarregada) rbCfgCarregada = (async () => {
+      $('rb-data').max = new Date().toISOString().slice(0, 10);
+      try { const c = await api('rbConfig'); preencher($('rb-projeto'), c.projetos); preencher($('rb-categoria'), c.categorias); }
+      catch (e) { rbCfgCarregada = false; $('rb-erro').textContent = e.message; $('rb-erro').hidden = false; }
+    })();
+    return rbCfgCarregada;
   }
   const lerValor = s => { s = String(s).trim().replace(/\s|R\$/g, ''); if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.'); return Number(s); };
 
@@ -248,22 +303,55 @@
     box.hidden = true;
     if (!$('rb-projeto').value || !$('rb-categoria').value || !$('rb-data').value || !$('rb-desc').value.trim()) return erro('Preencha projeto, categoria, data e descrição.');
     if (!(lerValor($('rb-valor').value) > 0)) return erro('Informe o valor em reais, por exemplo 45,90.');
-    if (!arq) return erro('Anexe o comprovante da despesa.');
-    if (arq.size > 10 * 1048576) return erro('O arquivo tem mais de 10 MB. Envie uma foto menor ou um PDF comprimido.');
+    if (!arq && !correcao) return erro('Anexe o comprovante da despesa.');
+    if (arq && arq.size > 10 * 1048576) return erro('O arquivo tem mais de 10 MB. Envie uma foto menor ou um PDF comprimido.');
     if (!$('rb-pix').value.trim() && !$('rb-banco').value.trim()) return erro('Informe uma chave PIX ou os dados bancários para receber.');
     const b = $('rb-enviar'); b.disabled = true; b.textContent = 'Enviando…';
     try {
-      const r = await api('rbCriar', {
+      const dados = {
         projeto: $('rb-projeto').value, categoria: $('rb-categoria').value, dataDespesa: $('rb-data').value,
         valor: lerValor($('rb-valor').value), descricao: $('rb-desc').value, pix: $('rb-pix').value, banco: $('rb-banco').value,
-        arquivo: { nome: arq.name, tipo: arq.type || 'application/octet-stream', base64: await API.arquivoParaBase64(arq) }
-      });
-      $('rb-protocolo').textContent = r.protocolo;
+        arquivo: arq ? { nome: arq.name, tipo: arq.type || 'application/octet-stream', base64: await API.arquivoParaBase64(arq) } : null
+      };
+      let protocolo;
+      if (correcao) { protocolo = correcao.protocolo; await api('rbReenviar', Object.assign({ protocolo }, dados)); }
+      else protocolo = (await api('rbCriar', dados)).protocolo;
+      $('rb-ok-txt').textContent = correcao ? 'Pedido corrigido e reenviado para aprovação!' : 'Pedido enviado! Seu protocolo:';
+      $('rb-protocolo').textContent = protocolo;
+      if (correcao) sairCorrecao();
       $('rb-form-wrap').hidden = true; $('rb-ok').hidden = false;
       if (podeAprovar()) carregarAprovacao(true);
     } catch (err) { if (!err.sessao) erro('O pedido não foi enviado: ' + err.message); }
-    finally { b.disabled = false; b.textContent = 'Enviar pedido'; }
+    finally { b.disabled = false; b.textContent = correcao ? 'Reenviar pedido corrigido' : 'Enviar pedido'; }
   });
+  // Modo correção: o mesmo formulário, preenchido com o pedido devolvido para revisão
+  function selecionar(sel, v) { if (v && ![...sel.options].some(o => o.value === v)) { const o = el('option', '', v); o.value = v; sel.appendChild(o); } sel.value = v || ''; }
+  async function abrirCorrecao(p) {
+    correcao = p; manterCorrecao = true;
+    $('rb-ok').hidden = true; $('rb-form-wrap').hidden = false; $('rb-erro').hidden = true;
+    $('rb-titulo').textContent = 'Corrigir pedido ' + p.protocolo;
+    $('rb-sub').textContent = 'Ajuste o que foi pedido e reenvie. O pedido volta para aprovação do financeiro.';
+    $('rb-revisao').textContent = 'O que corrigir: ' + (p.comentario || '—'); $('rb-revisao').hidden = false;
+    $('rb-arq-rot').textContent = 'Novo comprovante (opcional: deixe em branco para manter o atual)';
+    $('rb-enviar').textContent = 'Reenviar pedido corrigido'; $('rb-cancelar').hidden = false;
+    location.hash = 'novo';
+    await carregarRbConfig();
+    selecionar($('rb-projeto'), p.projeto); selecionar($('rb-categoria'), p.categoria);
+    $('rb-data').value = String(p.dataDespesa || '').slice(0, 10);
+    $('rb-valor').value = String(p.valor.toFixed(2)).replace('.', ',');
+    $('rb-desc').value = p.descricao || ''; $('rb-pix').value = p.pix || ''; $('rb-banco').value = p.banco || ''; $('rb-arq').value = '';
+  }
+  function sairCorrecao() {
+    correcao = null;
+    $('rb-titulo').textContent = 'Pedir reembolso';
+    $('rb-sub').textContent = 'Preencha os dados da despesa e anexe a nota ou recibo. Seu nome e e-mail já vão junto.';
+    $('rb-revisao').hidden = true; $('rb-cancelar').hidden = true;
+    $('rb-arq-rot').textContent = 'Comprovante (PDF, JPG ou PNG, até 10 MB)';
+    $('rb-enviar').textContent = 'Enviar pedido';
+    $('f-rb').reset();
+  }
+  $('rb-cancelar').addEventListener('click', () => { sairCorrecao(); location.hash = 'meus'; });
+
   $('rb-novo').addEventListener('click', () => {
     const pix = $('rb-pix').value, banco = $('rb-banco').value;
     $('f-rb').reset(); $('rb-pix').value = pix; $('rb-banco').value = banco;
@@ -271,7 +359,7 @@
   });
 
   /* ---------- Meus pedidos ---------- */
-  function pilula(st) { return el('span', 'pilula st-' + st, st); }
+  function pilula(st) { return el('span', 'pilula st-' + String(st).normalize('NFD').replace(/[^\w]/g, ''), st); }
   async function carregarMeus() {
     const box = $('meus'); box.innerHTML = ''; box.appendChild(el('p', 'nota', 'Carregando…'));
     try {
@@ -279,13 +367,14 @@
       box.innerHTML = '';
       if (!r.pedidos.length) { box.appendChild(el('div', 'vazio', 'Você ainda não fez nenhum pedido. Use "Pedir reembolso" quando precisar.')); return; }
       r.pedidos.forEach(p => {
-        const d = el('article', 'pedido');
+        const d = el('article', 'pedido' + (p.status === 'Em revisão' ? ' revisar' : ''));
         const top = el('div', 'pedido-top'); top.append(el('b', '', p.protocolo), pilula(p.status));
         const v = el('span', 'valor', API.dinheiro(p.valor));
         const info = el('span', 'nota', p.categoria + ' · ' + p.projeto + ' · enviado em ' + API.dataBR(p.criadoEm));
         d.append(top, v, el('p', '', p.descricao), info);
         if (p.comentario) d.appendChild(el('div', 'coment', 'Comentário: ' + p.comentario));
         if (p.pagoEm) d.appendChild(el('span', 'nota', 'Pago em ' + API.dataBR(p.pagoEm)));
+        if (p.status === 'Em revisão') { const c = el('button', 'btn peq', 'Corrigir e reenviar'); c.type = 'button'; c.style.justifySelf = 'start'; c.addEventListener('click', () => abrirCorrecao(p)); d.appendChild(c); }
         box.appendChild(d);
       });
     } catch (e) { box.innerHTML = ''; if (!e.sessao) box.appendChild(el('div', 'aviso erro', e.message)); }
@@ -298,8 +387,10 @@
     try {
       const r = await api('rbListar');
       pedidos = r.pedidos;
-      const pend = pedidos.filter(p => p.status === 'Pendente').length;
-      $('at-pend').textContent = pend ? pend + ' pedido(s) esperando análise.' : 'Nenhum pedido esperando análise.';
+      const meuStatus = ehAdmin() ? 'Aprovado' : 'Pendente';
+      const pend = pedidos.filter(p => p.status === meuStatus).length;
+      $('at-pend').textContent = pend ? pend + (ehAdmin() ? ' pedido(s) aprovado(s) esperando pagamento.' : ' pedido(s) esperando sua aprovação.') : 'Nada esperando você agora.';
+      $('ap-dica').textContent = ehAdmin() ? 'Você é Admin: paga, recusa ou pede revisão dos pedidos aprovados pelo financeiro.' : 'Você é Financeiro: aprove os pedidos pendentes. Depois, o Admin faz o pagamento.';
       const sel = $('ap-projeto'), v = sel.value;
       const projs = [...new Set(pedidos.map(p => p.projeto).filter(Boolean))].sort();
       sel.innerHTML = '<option value="">Todos os projetos</option>';
@@ -317,7 +408,7 @@
   function renderAprovacao() {
     const res = $('ap-resumo'); res.innerHTML = '';
     const base = filtrados(true);
-    [['Pendente', 'Esperando análise'], ['Aprovado', 'A pagar'], ['Pago', 'Pagos'], ['Recusado', 'Recusados']].forEach(([st, rot]) => {
+    [['Pendente', 'Esperando aprovação'], ['Aprovado', 'A pagar'], ['Em revisão', 'Em revisão'], ['Pago', 'Pagos'], ['Recusado', 'Recusados']].forEach(([st, rot]) => {
       const it = base.filter(p => p.status === st);
       const b = el('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(filtroStatus === st));
       b.append(el('span', 'rot', rot), el('span', 'qtd', it.length), el('span', 'soma', API.dinheiro(it.reduce((a, p) => a + p.valor, 0))));
@@ -362,19 +453,24 @@
     $('d-coment').value = ''; $('d-erro').hidden = true;
     const ac = $('d-acoes'); ac.innerHTML = '';
     const botao = (rot, st, cls) => { const b = el('button', 'btn ' + (cls || ''), rot); b.type = 'button'; b.addEventListener('click', () => mudar(st, b)); ac.appendChild(b); };
-    const fin = ['Financeiro', 'Admin'].indexOf(perfil.papel) >= 0;
-    if (p.status === 'Pendente') { botao('Aprovar', 'Aprovado'); botao('Recusar', 'Recusado', 'sec'); }
-    if (p.status === 'Aprovado') { if (fin) botao('Marcar como pago', 'Pago'); botao('Voltar para análise', 'Pendente', 'sec'); botao('Recusar', 'Recusado', 'sec'); }
-    if (p.status === 'Recusado') botao('Reabrir pedido', 'Pendente', 'sec');
-    $('d-bloco-coment').hidden = p.status === 'Pago';
-    if (p.status === 'Pago') ac.appendChild(el('span', 'nota', 'Pedido concluído.'));
+    const adm = ehAdmin(), nota = t => ac.appendChild(el('span', 'nota', t));
+    if (p.status === 'Pendente') { botao('Aprovar', 'Aprovado'); if (adm) { botao('Pedir revisão', 'Em revisão', 'sec'); botao('Recusar', 'Recusado', 'sec'); } }
+    if (p.status === 'Aprovado') { if (adm) { botao('Marcar como pago', 'Pago'); botao('Pedir revisão', 'Em revisão', 'sec'); botao('Recusar', 'Recusado', 'sec'); } else nota('Aprovado. Agora o Admin faz o pagamento.'); }
+    if (p.status === 'Em revisão') { if (adm) botao('Voltar para pendente', 'Pendente', 'sec'); nota('Aguardando o membro corrigir e reenviar.'); }
+    if (p.status === 'Recusado') { if (adm) botao('Reabrir pedido', 'Pendente', 'sec'); else nota('Pedido recusado.'); }
+    if (p.status === 'Pago') nota('Pedido concluído.');
+    $('d-bloco-coment').hidden = !ac.querySelector('button');
+    $('d-coment').placeholder = adm ? 'Obrigatório ao recusar ou pedir revisão. Ex.: comprovante ilegível, envie uma foto mais nítida.' : 'Opcional.';
     $('detalhe').showModal();
   }
   $('d-fechar').addEventListener('click', () => $('detalhe').close());
   $('detalhe').addEventListener('click', e => { if (e.target === $('detalhe')) $('detalhe').close(); });
   async function mudar(status, btn) {
     const coment = $('d-coment').value.trim(), box = $('d-erro');
-    if (status === 'Recusado' && !coment) { box.textContent = 'Escreva o motivo da recusa no comentário. O solicitante recebe essa mensagem.'; box.hidden = false; $('d-coment').focus(); return; }
+    if ((status === 'Recusado' || status === 'Em revisão') && !coment) {
+      box.textContent = status === 'Recusado' ? 'Escreva o motivo da recusa no comentário. O solicitante recebe essa mensagem.' : 'Escreva no comentário o que o membro precisa corrigir. Ele recebe essa mensagem.';
+      box.hidden = false; $('d-coment').focus(); return;
+    }
     $('d-acoes').querySelectorAll('button').forEach(b => b.disabled = true);
     const t = btn.textContent; btn.textContent = 'Salvando…'; box.hidden = true;
     try { await api('rbAtualizar', { protocolo: atual.protocolo, status, comentario: coment }); $('detalhe').close(); await carregarAprovacao(); }
@@ -389,6 +485,84 @@
     const url = URL.createObjectURL(new Blob(['﻿' + linhas.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
     const a = el('a'); a.href = url; a.download = 'reembolsos-' + new Date().toISOString().slice(0, 10) + '.csv';
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+  });
+
+  /* ---------- Membros (só Admin) ---------- */
+  async function carregarMembros() {
+    if (!ehAdmin()) return;
+    $('mb-vazio').hidden = false; $('mb-vazio').textContent = 'Carregando membros…'; $('mb-linhas').innerHTML = '';
+    try { membros = (await api('mbListar')).membros; renderMembros(); }
+    catch (e) { if (!e.sessao) $('mb-vazio').textContent = e.message; }
+  }
+  $('mb-atualizar').addEventListener('click', carregarMembros);
+  $('mb-busca').addEventListener('input', renderMembros);
+  function renderMembros() {
+    const q = $('mb-busca').value.trim().toLowerCase(), tb = $('mb-linhas'); tb.innerHTML = '';
+    const lista = membros.filter(m => !q || (m.nome + ' ' + m.email).toLowerCase().includes(q));
+    lista.forEach(m => {
+      const tr = el('tr'); tr.tabIndex = 0;
+      const n = el('td'); n.appendChild(el('b', '', m.nome || '—')); if (m.voce) n.appendChild(el('span', 'nota', ' (você)')); tr.appendChild(n);
+      tr.appendChild(el('td', '', m.email));
+      const pp = el('td'); pp.appendChild(el('span', 'pilula papel-' + m.papel, m.papel)); tr.appendChild(pp);
+      const at = el('td'); at.appendChild(el('span', 'pilula ' + (m.ativo ? 'st-Aprovado' : 'st-Recusado'), m.ativo ? 'Ativo' : 'Bloqueado')); tr.appendChild(at);
+      tr.appendChild(el('td', 'nota', m.ultimoAcesso ? API.dataBR(m.ultimoAcesso) : 'Nunca entrou'));
+      tr.addEventListener('click', () => abrirMembro(m));
+      tr.addEventListener('keydown', e => { if (e.key === 'Enter') abrirMembro(m); });
+      tb.appendChild(tr);
+    });
+    $('mb-vazio').hidden = lista.length > 0;
+    $('mb-vazio').textContent = membros.length ? 'Ninguém encontrado com essa busca.' : 'Nenhum membro cadastrado.';
+  }
+  const DICA_PAPEL = { Membro: 'Pede reembolso e acompanha os próprios pedidos.', Financeiro: 'Também aprova os pedidos pendentes.', Admin: 'Também paga, recusa, pede revisão e gerencia membros.' };
+  $('m-papel').addEventListener('input', () => { $('m-papel-dica').textContent = DICA_PAPEL[$('m-papel').value]; });
+  function abrirMembro(m) {
+    membroAtual = m || null;
+    $('m-titulo').textContent = m ? 'Editar membro' : 'Adicionar membro';
+    $('m-nome').value = m ? m.nome : ''; $('m-email').value = m ? m.email : '';
+    $('m-papel').value = m ? m.papel : 'Membro'; $('m-ativo').value = !m || m.ativo ? 'sim' : 'nao';
+    $('m-papel-dica').textContent = DICA_PAPEL[$('m-papel').value];
+    $('m-senha').value = '';
+    $('m-senha-rot').textContent = m ? 'Nova senha (opcional)' : 'Senha';
+    $('m-senha-dica').textContent = m ? 'Deixe em branco para manter a senha atual.' : 'A pessoa pode trocar depois em "Minha conta".';
+    $('m-enviar').checked = !m;
+    const rm = $('m-remover'); rm.hidden = !m || m.voce; rm.textContent = 'Remover membro'; delete rm.dataset.confirmar;
+    $('m-papel').disabled = $('m-ativo').disabled = !!(m && m.voce);
+    $('m-erro').hidden = true;
+    $('dlg-membro').showModal(); $('m-nome').focus();
+  }
+  $('mb-novo').addEventListener('click', () => abrirMembro(null));
+  $('m-fechar').addEventListener('click', () => $('dlg-membro').close());
+  $('m-gerar').addEventListener('click', () => {
+    const abc = 'abcdefghjkmnpqrstuvwxyz23456789'; let s = '';
+    for (let i = 0; i < 8; i++) s += abc[Math.floor(Math.random() * abc.length)];
+    $('m-senha').value = s; if (!membroAtual) $('m-enviar').checked = true;
+  });
+  $('f-membro').addEventListener('submit', async e => {
+    e.preventDefault();
+    const box = $('m-erro'), erro = t => { box.textContent = t; box.hidden = false; };
+    box.hidden = true;
+    const nome = $('m-nome').value.trim(), email = $('m-email').value.trim(), senha = $('m-senha').value;
+    if (!nome) return erro('Informe o nome.');
+    if (!$('m-email').checkValidity() || !email) return erro('Confira o e-mail: ele parece incompleto.');
+    if (!membroAtual && !senha) return erro('Defina uma senha (ou clique em "Gerar senha").');
+    if (senha && senha.length < 6) return erro('A senha precisa ter pelo menos 6 caracteres.');
+    if ($('m-enviar').checked && !senha) return erro('Para enviar o e-mail com o acesso, defina uma nova senha.');
+    const b = $('m-salvar'); b.disabled = true; b.textContent = 'Salvando…';
+    try {
+      await api('mbSalvar', { original: membroAtual ? membroAtual.email : '', nome, email, senha,
+        papel: $('m-papel').value, ativo: $('m-ativo').value === 'sim', enviarEmail: $('m-enviar').checked });
+      $('dlg-membro').close(); await carregarMembros();
+    } catch (err) { if (!err.sessao) erro(err.message); }
+    finally { b.disabled = false; b.textContent = 'Salvar'; }
+  });
+  // Remover pede um segundo clique para confirmar
+  $('m-remover').addEventListener('click', async () => {
+    const rm = $('m-remover');
+    if (!rm.dataset.confirmar) { rm.dataset.confirmar = '1'; rm.textContent = 'Clique de novo para remover ' + (membroAtual.nome.split(' ')[0] || 'este membro'); return; }
+    rm.disabled = true; rm.textContent = 'Removendo…';
+    try { await api('mbRemover', { email: membroAtual.email }); $('dlg-membro').close(); await carregarMembros(); }
+    catch (err) { if (!err.sessao) { $('m-erro').textContent = err.message; $('m-erro').hidden = false; } }
+    finally { rm.disabled = false; }
   });
 
   /* ---------- Conta ---------- */
