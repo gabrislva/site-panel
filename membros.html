@@ -454,7 +454,7 @@
     document.querySelectorAll('[data-papeis]').forEach(x => { x.hidden = x.dataset.papeis.split(',').indexOf(perfil.papel) < 0; });
     // Mural
     avisos = r.avisos; avisosTodos = false; renderAvisos();
-    if (!r.reembolsoAtivo) { $('p-erro').textContent = 'O reembolso ainda não foi ligado ao portal (falta REEMBOLSOS_PLANILHA_ID no Apps Script).'; $('p-erro').hidden = false; }
+    if (!r.reembolsoAtivo) { $('p-erro').textContent = 'O reembolso não está disponível: rode a função configurar no Apps Script.'; $('p-erro').hidden = false; }
     if (podeAprovar()) carregarAprovacao(true);
     rota();
   }
@@ -924,7 +924,7 @@
         g.appendChild(col);
       });
       ranking = d.ranking; presenca = d.presenca; renderRanking(); renderMinhasPresencas();
-      if (!d.despesas.reembolsoLigado) $('dash-kpis').appendChild(el('p', 'nota inteiro-dash', 'Os reembolsos não entraram na conta: falta ligar a planilha de reembolsos (REEMBOLSOS_PLANILHA_ID).'));
+      if (!d.despesas.reembolsoLigado) $('dash-kpis').appendChild(el('p', 'nota inteiro-dash', 'Os reembolsos não entraram na conta: rode a função configurar no Apps Script para criar a aba Reembolsos.'));
     } catch (e) { if (!e.sessao) { $('dash-kpis').innerHTML = ''; $('dash-kpis').appendChild(el('div', 'aviso erro', 'Não foi possível carregar o panorama: ' + e.message)); } }
   }
 

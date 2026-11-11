@@ -5,8 +5,7 @@ Mesmo modelo dos outros sistemas:
 | Parte | Onde fica | Quem edita |
 |---|---|---|
 | Páginas públicas (Início, Sobre nós, Esportes, Eventos, Contato) | GitHub, arquivo `conteudo.js` | Você, editando o texto |
-| Área do membro (login, avisos, reembolso) | GitHub + Apps Script + Planilha do Portal | Planilha |
-| Reembolsos | A mesma planilha de reembolsos que você já usa | Planilha |
+| Área do membro (login, avisos, reembolsos, vendas, eventos…) | GitHub + Apps Script + **uma planilha só** | Planilha |
 
 Custo: R$ 0.
 
@@ -36,14 +35,23 @@ Custo: R$ 0.
    | Aba | O que é |
    |---|---|
    | **Config** | Nome da instituição e **e-mail que recebe o formulário de contato** (preencha!) |
-   | **Membros** | `Nome · E-mail · Senha · Papel · Ativo · Último acesso`. Já vem com você na Presidência, com a senha `trocar123` |
+   | **Membros** | `Nome · E-mail · Senha · Papel · Ativo · Último acesso · Foto`. Já vem com você na Presidência, com a senha `trocar123` |
    | **Avisos** | Mural da Área do membro. Só aparecem os avisos com *Publicado = Sim* |
    | **Contatos** | Cópia de todas as mensagens do formulário de contato |
+   | **Reembolsos** | Todos os pedidos de reembolso |
+   | **Categorias e projetos** | Listas do formulário de reembolso: categorias na coluna A, projetos/setores na coluna B |
+   | **Itens · Vendas · Compras** | Estoque e vendas |
+   | **Eventos · Presenças** | Eventos internos e lista de presença |
 
-4. **Ligue o reembolso:** abra a sua planilha de reembolsos e copie o ID dela, que é a parte da URL entre `/d/` e `/edit`:
-   `https://docs.google.com/spreadsheets/d/`**`1AbC...xyz`**`/edit`
-   Volte ao Apps Script do Portal, vá em **⚙ Configurações do projeto → Propriedades do script** e cole o ID em `REEMBOLSOS_PLANILHA_ID`.
-5. Vá em **Implantar → Nova implantação → App da Web**, com *Executar como: **Eu*** e *Quem pode acessar: **Qualquer pessoa***. Copie a URL que termina em `/exec`.
+4. Vá em **Implantar → Nova implantação → App da Web**, com *Executar como: **Eu*** e *Quem pode acessar: **Qualquer pessoa***. Copie a URL que termina em `/exec`.
+
+### Trazer os reembolsos da planilha antiga (opcional)
+
+1. Copie o ID da planilha de reembolsos antiga, que é a parte da URL entre `/d/` e `/edit`.
+2. No topo do `Code.gs`, cole o ID entre as aspas: `const PLANILHA_REEMBOLSOS_ANTIGA = '1AbC...xyz';` e salve.
+3. Rode a função **importarReembolsosAntigos**. Ela copia os pedidos (pulando os que já existem) e as categorias e projetos.
+
+A propriedade `REEMBOLSOS_PLANILHA_ID` não é mais usada e pode ser apagada.
 
 > Depois de atualizar o `Code.gs`, rode **configurar** de novo. Ele não apaga nada, só cria o que faltar. Em seguida, vá em **Implantar → Gerenciar implantações → Editar → Nova versão**.
 
@@ -79,7 +87,7 @@ No menu **Membros** da Área do membro:
 - **Foto:** clique em *Escolher foto*. O site recorta no centro e reduz a imagem sozinho, e ela aparece redondinha ao lado do nome. As fotos ficam na pasta **Portal — Fotos dos membros** do Drive. Cada membro também pode trocar a própria foto em *Minha conta*.
 - **Editar:** clique na pessoa. Para trocar a senha, digite a nova; deixe em branco para manter a atual.
 - **Bloquear:** em *Acesso*, escolha *Bloqueado*. A pessoa não entra mais, mas o histórico dela fica.
-- **Excluir:** clique em *Excluir* na linha, ou dentro do cadastro, e confirme com um segundo clique. A linha sai da planilha e a foto vai para a lixeira do Drive; os pedidos de reembolso da pessoa continuam na planilha de reembolsos.
+- **Excluir:** clique em *Excluir* na linha, ou dentro do cadastro, e confirme com um segundo clique. A linha sai da planilha e a foto vai para a lixeira do Drive; os pedidos de reembolso da pessoa continuam na aba Reembolsos.
 - **Regras de segurança:**
   - A Gestão de Pessoas não vê o cargo *Presidência* na lista e não consegue editar nem excluir quem é da Presidência.
   - Ninguém consegue excluir a si mesmo, nem mudar o próprio cargo.
@@ -98,7 +106,7 @@ O link que vai no e-mail de boas-vindas fica na aba **Config** (*Link da Área d
 
 ### E o sistema de reembolso antigo?
 
-Os arquivos antigos (`index.html`, `painel.html`, `config.js` e `assets/` do reembolso) estavam na raiz e vão ser **substituídos** pelos do site. Isso é esperado: os pedidos agora são feitos pela Área do membro, e a aprovação também. A planilha de reembolsos e os pedidos antigos continuam iguais e aparecem no portal.
+Os arquivos antigos (`index.html`, `painel.html`, `config.js` e `assets/` do reembolso) estavam na raiz e vão ser **substituídos** pelos do site. Isso é esperado: os pedidos agora são feitos pela Área do membro, e a aprovação também. Os pedidos antigos podem ser trazidos para a planilha do portal com *importarReembolsosAntigos* (veja o Passo 1).
 
 Se quiser manter o formulário público antigo funcionando por um tempo, mova os arquivos dele para uma pasta `reembolsos/` **antes** de subir o site.
 
@@ -121,7 +129,7 @@ As mensagens chegam no e-mail definido na aba **Config** e ficam registradas na 
 ## Área do membro
 
 - **Início:** mural de avisos no topo (os 3 mais recentes, com *Ver todos*), sua contagem de presenças e faltas, panorama financeiro, ranking e atalhos.
-- **Pedir reembolso:** o nome e o e-mail vão automaticamente; as categorias e os projetos vêm da aba *Config* da planilha de reembolsos.
+- **Pedir reembolso:** o nome e o e-mail vão automaticamente; as categorias e os projetos vêm da aba *Categorias e projetos*.
 - **Meus pedidos:** status e comentários de cada pedido.
 - **Gerenciar reembolsos:** só para Financeiro e Presidência. Tem filtros, detalhes, histórico e exportação em CSV.
 - **Eventos internos:** só para Presidência e Gestão de Pessoas. Cria eventos e registra a presença.

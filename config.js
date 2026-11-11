@@ -2,7 +2,7 @@
 window.CONFIG = {
   // URL do App da Web do Apps Script DO PORTAL (termina em /exec)
   // Usado pelo formulário de contato e pela Área do membro
-  API_URL: 'https://script.google.com/macros/s/AKfycbx8DkhcUHDGNRAKpGleTcSwZgaF7s2eEXSZyO3f38yO80MGomU9qojEGe_kfBZF8sBb/exec',
+  API_URL: 'https://script.google.com/macros/s/AKfycbwmau0yCnt3zyfwUPCuWWJ6l-cwAV1AHgiCGuIUHMdJMUOybI7715cR4ztTqDsAuUIopw/exec',
 
   // Nome curto (topo do site) e nome completo (rodapé)
   NOME_ORGANIZACAO: 'ATECO UFSC',
