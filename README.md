@@ -36,7 +36,7 @@ Custo: R$ 0.
    | Aba | O que é |
    |---|---|
    | **Config** | Nome da instituição e **e-mail que recebe o formulário de contato** (preencha!) |
-   | **Membros** | `Nome · E-mail · Senha · Papel · Ativo · Último acesso`. Já vem com você como Admin, com a senha `trocar123` |
+   | **Membros** | `Nome · E-mail · Senha · Papel · Ativo · Último acesso`. Já vem com você na Presidência, com a senha `trocar123` |
    | **Avisos** | Mural da Área do membro. Só aparecem os avisos com *Publicado = Sim* |
    | **Contatos** | Cópia de todas as mensagens do formulário de contato |
 
@@ -47,17 +47,47 @@ Custo: R$ 0.
 
 > Depois de atualizar o `Code.gs`, rode **configurar** de novo. Ele não apaga nada, só cria o que faltar. Em seguida, vá em **Implantar → Gerenciar implantações → Editar → Nova versão**.
 
-### Papéis dos membros
+### Cargos dos membros
 
-| Papel | Pode |
+| Cargo | Pode |
 |---|---|
-| **Membro** | Pedir reembolso e acompanhar os próprios pedidos |
-| **Aprovador** | + aprovar ou recusar pedidos de todos |
-| **Financeiro** | + marcar pedidos como pagos |
-| **Admin** | Tudo |
+| **Membro**, **Marketing**, **Comercial**, **Esportes**, **Conselho**, **Eventos** | Pedir reembolso, acompanhar e corrigir os próprios pedidos |
+| **Financeiro** | + aprovar os pedidos pendentes |
+| **Gestão de Pessoas** | + adicionar, editar e excluir membros (menos quem é da Presidência) |
+| **Presidência** | Tudo: pagar, recusar, pedir revisão e gerenciar todos os membros |
 
-- **Bloquear alguém:** mude *Ativo* para `Não`. A pessoa sai na próxima ação que fizer.
-- **Senha:** fica visível na planilha, sem criptografia. Para resetar, é só escrever outra. O membro pode trocar a própria senha em *Minha conta*.
+Ao rodar *configurar*, os nomes antigos são convertidos sozinhos: **Admin → Presidência** e **Aprovador → Financeiro**.
+
+### Fluxo do reembolso
+
+```
+Pendente ──(Financeiro aprova)──► Aprovado ──(Presidência)──► Pago
+                                     ├──(Presidência)──► Recusado
+                                     └──(Presidência)──► Em revisão ──(membro corrige e reenvia)──► Pendente
+```
+
+- **Recusar** e **pedir revisão** exigem um comentário, que vai por e-mail para o membro.
+- Em **revisão**, o membro vê o pedido destacado em *Meus pedidos*, clica em **Corrigir e reenviar**, ajusta os dados (pode trocar o comprovante) e o pedido volta para o Financeiro.
+- **E-mails automáticos:** pedido novo ou corrigido avisa o Financeiro; pedido aprovado avisa a Presidência; toda mudança de status avisa o membro.
+- A Presidência também pode recusar ou pedir revisão direto de um pedido pendente, e reabrir pedidos recusados.
+
+### Gerenciar membros (Presidência e Gestão de Pessoas)
+
+No menu **Membros** da Área do membro:
+
+- **+ Adicionar membro:** foto (opcional), nome, e-mail, cargo e senha. *Gerar senha* cria uma senha aleatória. Deixe marcado "Enviar e-mail" para a pessoa receber o login.
+- **Foto:** clique em *Escolher foto*. O site recorta no centro e reduz a imagem sozinho, e ela aparece redondinha ao lado do nome. As fotos ficam na pasta **Portal — Fotos dos membros** do Drive. Cada membro também pode trocar a própria foto em *Minha conta*.
+- **Editar:** clique na pessoa. Para trocar a senha, digite a nova; deixe em branco para manter a atual.
+- **Bloquear:** em *Acesso*, escolha *Bloqueado*. A pessoa não entra mais, mas o histórico dela fica.
+- **Excluir:** clique em *Excluir* na linha, ou dentro do cadastro, e confirme com um segundo clique. A linha sai da planilha e a foto vai para a lixeira do Drive; os pedidos de reembolso da pessoa continuam na planilha de reembolsos.
+- **Regras de segurança:**
+  - A Gestão de Pessoas não vê o cargo *Presidência* na lista e não consegue editar nem excluir quem é da Presidência.
+  - Ninguém consegue excluir a si mesmo, nem mudar o próprio cargo.
+  - Sempre precisa sobrar pelo menos uma pessoa ativa na Presidência.
+
+> As fotos são compartilhadas no Drive como "qualquer pessoa com o link pode ver", para aparecerem no site. Se a sua conta Google não permitir isso, o sistema guarda a foto, já reduzida, direto na planilha.
+
+O link que vai no e-mail de boas-vindas fica na aba **Config** (*Link da Área do membro*).
 
 ## Passo 2 · Site no GitHub
 
@@ -93,8 +123,9 @@ As mensagens chegam no e-mail definido na aba **Config** e ficam registradas na 
 - **Início:** saudação, atalhos e o mural de avisos (aba *Avisos*).
 - **Pedir reembolso:** o nome e o e-mail vão automaticamente; as categorias e os projetos vêm da aba *Config* da planilha de reembolsos.
 - **Meus pedidos:** status e comentários de cada pedido.
-- **Aprovar reembolsos:** só para Aprovador, Financeiro e Admin. Tem filtros, detalhes, histórico e exportação em CSV.
-- **Minha conta:** trocar a senha.
+- **Gerenciar reembolsos:** só para Financeiro e Presidência. Tem filtros, detalhes, histórico e exportação em CSV.
+- **Membros:** só para Presidência e Gestão de Pessoas. Serve para adicionar, editar, bloquear e excluir membros, com foto.
+- **Minha conta:** trocar a foto e a senha.
 
 A sessão dura 6 horas sem uso. Depois disso, é preciso entrar de novo.
 

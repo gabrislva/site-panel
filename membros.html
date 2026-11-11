@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Mono:wght@500&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
-<link rel="stylesheet" href="assets/styles.css?v=2">
+<link rel="stylesheet" href="assets/styles.css?v=3">
 </head>
 <body data-pagina="membros">
 <div id="topo"></div>
@@ -34,12 +34,12 @@
 <!-- ========== PORTAL ========== -->
 <div class="portal gutter" id="tela-portal" hidden>
   <nav class="lado" aria-label="Portal">
-    <div class="quem"><span class="papel-chip" id="p-papel"></span><b id="p-nome"></b><span class="nota" id="p-email"></span></div>
+    <div class="quem"><span id="p-foto"></span><span class="papel-chip" id="p-papel"></span><b id="p-nome"></b><span class="nota" id="p-email"></span></div>
     <button type="button" data-aba="inicio"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Início</button>
     <button type="button" data-aba="novo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Pedir reembolso</button>
     <button type="button" data-aba="meus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Meus pedidos</button>
-    <button type="button" data-aba="aprovar" data-papeis="Financeiro,Admin" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gerenciar reembolsos</button>
-    <button type="button" data-aba="membros" data-papeis="Admin" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.2 2.6 3.6 5.5"/></svg>Membros</button>
+    <button type="button" data-aba="aprovar" data-papeis="Financeiro,Presidência" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gerenciar reembolsos</button>
+    <button type="button" data-aba="membros" data-papeis="Presidência,Gestão de Pessoas" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.2 2.6 3.6 5.5"/></svg>Membros</button>
     <button type="button" data-aba="conta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Minha conta</button>
     <button type="button" class="sair" id="b-sair"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h4v16h-4"/><path d="M10 8l-4 4 4 4M6 12h10"/></svg>Sair</button>
   </nav>
@@ -54,7 +54,7 @@
         <div class="atalhos">
           <button class="atalho" type="button" data-ir="novo"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><b>Pedir reembolso</b><span>Pagou algo pela instituição? Envie o comprovante.</span></button>
           <button class="atalho" type="button" data-ir="meus"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span><b>Meus pedidos</b><span>Veja o status dos seus reembolsos.</span></button>
-          <button class="atalho" type="button" data-ir="aprovar" data-papeis="Financeiro,Admin" hidden><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b>Gerenciar reembolsos</b><span id="at-pend">Pedidos esperando você.</span></button>
+          <button class="atalho" type="button" data-ir="aprovar" data-papeis="Financeiro,Presidência" hidden><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b>Gerenciar reembolsos</b><span id="at-pend">Pedidos esperando você.</span></button>
         </div>
         <div class="painel-head"><h2>Mural de avisos</h2></div>
         <div class="avisos" id="avisos"></div>
@@ -123,17 +123,18 @@
       </div>
     </section>
 
-    <!-- Membros (Admin) -->
+    <!-- Membros (Presidência e Gestão de Pessoas) -->
     <section data-painel="membros" hidden>
       <div class="painel">
         <div class="painel-head" style="display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap">
-          <div style="display:grid;gap:6px"><span class="eyebrow">Administração</span><h2>Membros</h2><p class="nota">Quem pode entrar na Área do membro e o que cada um pode fazer.</p></div>
+          <div style="display:grid;gap:6px"><span class="eyebrow">Gestão de pessoas</span><h2>Membros</h2><p class="nota">Quem pode entrar na Área do membro, o cargo e a foto de cada um.</p></div>
           <div class="acoes"><button class="btn sec peq" id="mb-atualizar" type="button">Atualizar</button><button class="btn peq" id="mb-novo" type="button">+ Adicionar membro</button></div>
         </div>
-        <div class="filtros"><input id="mb-busca" type="search" placeholder="Buscar por nome ou e-mail" aria-label="Buscar membro"></div>
+        <div class="filtros"><input id="mb-busca" type="search" placeholder="Buscar por nome, e-mail ou cargo" aria-label="Buscar membro"></div>
+        <div id="mb-erro" class="aviso erro" hidden role="alert"></div>
         <div class="tabela-wrap">
           <table>
-            <thead><tr><th>Nome</th><th>E-mail</th><th>Papel</th><th>Acesso</th><th>Último acesso</th></tr></thead>
+            <thead><tr><th>Nome</th><th>E-mail</th><th>Cargo</th><th>Acesso</th><th>Último acesso</th><th><span class="sr">Ações</span></th></tr></thead>
             <tbody id="mb-linhas"></tbody>
           </table>
           <div class="vazio" id="mb-vazio" hidden></div>
@@ -143,7 +144,17 @@
 
     <!-- Conta -->
     <section data-painel="conta" hidden>
-      <div class="cartao" style="max-width:560px">
+      <div class="painel" style="max-width:560px">
+      <div class="cartao">
+        <header><span class="eyebrow">Minha conta</span><h2>Minha foto</h2><p>Aparece ao lado do seu nome no portal.</p></header>
+        <div class="foto-campo">
+          <div id="c-foto-prev"></div>
+          <div class="acoes"><label class="btn sec peq" for="c-foto">Escolher foto</label><button class="btn sec peq" id="c-foto-rem" type="button" hidden>Remover foto</button></div>
+          <input type="file" id="c-foto" accept="image/*" class="sr">
+        </div>
+        <div id="c-foto-aviso" class="aviso" hidden role="status"></div>
+      </div>
+      <div class="cartao">
         <header><span class="eyebrow">Minha conta</span><h2>Trocar senha</h2><p>Escolha uma senha com pelo menos 6 caracteres.</p></header>
         <form id="f-senha" class="grade" novalidate>
           <div class="campo inteiro"><label for="s-atual">Senha atual</label><input id="s-atual" type="password" autocomplete="current-password"></div>
@@ -152,6 +163,7 @@
           <div id="s-aviso" class="aviso inteiro" hidden role="status"></div>
           <div class="acoes inteiro"><button class="btn" id="s-salvar" type="submit">Salvar nova senha</button></div>
         </form>
+      </div>
       </div>
     </section>
   </main>
@@ -178,10 +190,19 @@
       <button class="fechar" id="m-fechar" type="button" aria-label="Fechar">×</button>
     </header>
     <div class="grade">
+      <div class="campo inteiro foto-campo">
+        <div id="m-foto-prev"></div>
+        <div style="display:grid;gap:8px">
+          <span style="font-weight:700;font-size:14px">Foto</span>
+          <div class="acoes"><label class="btn sec peq" for="m-foto">Escolher foto</label><button class="btn sec peq" id="m-foto-rem" type="button" hidden>Remover foto</button></div>
+          <span class="dica">Aparece redondinha ao lado do nome. Opcional.</span>
+        </div>
+        <input type="file" id="m-foto" accept="image/*" class="sr">
+      </div>
       <div class="campo inteiro"><label for="m-nome">Nome</label><input id="m-nome" autocomplete="off"></div>
       <div class="campo inteiro"><label for="m-email">E-mail</label><input id="m-email" type="email" autocomplete="off"></div>
-      <div class="campo"><label for="m-papel">Papel</label>
-        <select id="m-papel"><option value="Membro">Membro</option><option value="Financeiro">Financeiro</option><option value="Admin">Admin</option></select>
+      <div class="campo"><label for="m-papel">Cargo</label>
+        <select id="m-papel"></select>
         <span class="dica" id="m-papel-dica"></span></div>
       <div class="campo"><label for="m-ativo">Acesso</label>
         <select id="m-ativo"><option value="sim">Ativo (pode entrar)</option><option value="nao">Bloqueado</option></select></div>
@@ -192,17 +213,17 @@
     </div>
     <div id="m-erro" class="aviso erro" hidden role="alert"></div>
     <div class="acoes" style="justify-content:space-between">
-      <button class="btn sec" id="m-remover" type="button" hidden>Remover membro</button>
+      <button class="btn sec perigo" id="m-remover" type="button" hidden>Excluir membro</button>
       <button class="btn" id="m-salvar" type="submit">Salvar</button>
     </div>
   </form>
 </dialog>
 
 <footer id="rodape"></footer>
-<script src="config.js?v=2"></script>
-<script src="conteudo.js?v=2"></script>
-<script src="assets/api.js?v=2"></script>
-<script src="assets/site.js?v=2"></script>
+<script src="config.js?v=3"></script>
+<script src="conteudo.js?v=3"></script>
+<script src="assets/api.js?v=3"></script>
+<script src="assets/site.js?v=3"></script>
 <script>
 (function () {
   const $ = id => document.getElementById(id);
@@ -210,6 +231,8 @@
 
   let token = '', perfil = null, pedidos = [], filtroStatus = 'Pendente', atual = null, rbCfgCarregada = false;
   let correcao = null, manterCorrecao = false, membros = [], membroAtual = null;
+  const PRES = 'Presidência', GP = 'Gestão de Pessoas';
+  const PAPEIS = ['Membro', 'Financeiro', GP, 'Marketing', 'Comercial', 'Esportes', 'Conselho', 'Eventos', PRES];
   try { token = localStorage.getItem('portal-token') || ''; } catch (e) {}
   const guardar = t => { token = t; try { t ? localStorage.setItem('portal-token', t) : localStorage.removeItem('portal-token'); } catch (e) {} };
 
@@ -245,9 +268,9 @@
   async function abrirPortal() {
     const r = await api('eu');
     perfil = r.perfil;
-    filtroStatus = perfil.papel === 'Admin' ? 'Aprovado' : 'Pendente';
+    filtroStatus = perfil.papel === PRES ? 'Aprovado' : 'Pendente';
     $('tela-login').hidden = true; $('tela-portal').hidden = false;
-    $('p-nome').textContent = perfil.nome || perfil.email; $('p-email').textContent = perfil.email; $('p-papel').textContent = perfil.papel;
+    $('p-nome').textContent = perfil.nome || perfil.email; $('p-email').textContent = perfil.email; $('p-papel').textContent = perfil.papel; mostrarMinhaFoto();
     $('ola').textContent = 'Olá, ' + (perfil.nome || '').split(' ')[0] + '!';
     document.querySelectorAll('[data-papeis]').forEach(x => { x.hidden = x.dataset.papeis.split(',').indexOf(perfil.papel) < 0; });
     // Mural
@@ -258,14 +281,15 @@
     if (podeAprovar()) carregarAprovacao(true);
     rota();
   }
-  const podeAprovar = () => perfil && ['Financeiro', 'Admin'].indexOf(perfil.papel) >= 0;
-  const ehAdmin = () => perfil && perfil.papel === 'Admin';
+  const podeAprovar = () => perfil && ['Financeiro', PRES].indexOf(perfil.papel) >= 0;
+  const ehPres = () => perfil && perfil.papel === PRES;
+  const podeGerir = () => perfil && [PRES, GP].indexOf(perfil.papel) >= 0;
 
   /* ---------- Navegação (#inicio, #novo, #meus, #aprovar, #conta) ---------- */
   function rota() {
     if (!perfil) return;
     let aba = location.hash.slice(1) || 'inicio';
-    if (!document.querySelector('[data-painel="' + aba + '"]') || (aba === 'aprovar' && !podeAprovar()) || (aba === 'membros' && !ehAdmin())) aba = 'inicio';
+    if (!document.querySelector('[data-painel="' + aba + '"]') || (aba === 'aprovar' && !podeAprovar()) || (aba === 'membros' && !podeGerir())) aba = 'inicio';
     document.querySelectorAll('[data-painel]').forEach(s => s.hidden = s.dataset.painel !== aba);
     document.querySelectorAll('.lado [data-aba]').forEach(b => b.setAttribute('aria-current', String(b.dataset.aba === aba)));
     if (aba === 'novo') { carregarRbConfig(); if (manterCorrecao) manterCorrecao = false; else if (correcao) sairCorrecao(); }
@@ -387,10 +411,10 @@
     try {
       const r = await api('rbListar');
       pedidos = r.pedidos;
-      const meuStatus = ehAdmin() ? 'Aprovado' : 'Pendente';
+      const meuStatus = ehPres() ? 'Aprovado' : 'Pendente';
       const pend = pedidos.filter(p => p.status === meuStatus).length;
-      $('at-pend').textContent = pend ? pend + (ehAdmin() ? ' pedido(s) aprovado(s) esperando pagamento.' : ' pedido(s) esperando sua aprovação.') : 'Nada esperando você agora.';
-      $('ap-dica').textContent = ehAdmin() ? 'Você é Admin: paga, recusa ou pede revisão dos pedidos aprovados pelo financeiro.' : 'Você é Financeiro: aprove os pedidos pendentes. Depois, o Admin faz o pagamento.';
+      $('at-pend').textContent = pend ? pend + (ehPres() ? ' pedido(s) aprovado(s) esperando pagamento.' : ' pedido(s) esperando sua aprovação.') : 'Nada esperando você agora.';
+      $('ap-dica').textContent = ehPres() ? 'Você é da Presidência: paga, recusa ou pede revisão dos pedidos aprovados pelo financeiro.' : 'Você é do Financeiro: aprove os pedidos pendentes. Depois, a Presidência faz o pagamento.';
       const sel = $('ap-projeto'), v = sel.value;
       const projs = [...new Set(pedidos.map(p => p.projeto).filter(Boolean))].sort();
       sel.innerHTML = '<option value="">Todos os projetos</option>';
@@ -453,9 +477,9 @@
     $('d-coment').value = ''; $('d-erro').hidden = true;
     const ac = $('d-acoes'); ac.innerHTML = '';
     const botao = (rot, st, cls) => { const b = el('button', 'btn ' + (cls || ''), rot); b.type = 'button'; b.addEventListener('click', () => mudar(st, b)); ac.appendChild(b); };
-    const adm = ehAdmin(), nota = t => ac.appendChild(el('span', 'nota', t));
+    const adm = ehPres(), nota = t => ac.appendChild(el('span', 'nota', t));
     if (p.status === 'Pendente') { botao('Aprovar', 'Aprovado'); if (adm) { botao('Pedir revisão', 'Em revisão', 'sec'); botao('Recusar', 'Recusado', 'sec'); } }
-    if (p.status === 'Aprovado') { if (adm) { botao('Marcar como pago', 'Pago'); botao('Pedir revisão', 'Em revisão', 'sec'); botao('Recusar', 'Recusado', 'sec'); } else nota('Aprovado. Agora o Admin faz o pagamento.'); }
+    if (p.status === 'Aprovado') { if (adm) { botao('Marcar como pago', 'Pago'); botao('Pedir revisão', 'Em revisão', 'sec'); botao('Recusar', 'Recusado', 'sec'); } else nota('Aprovado. Agora a Presidência faz o pagamento.'); }
     if (p.status === 'Em revisão') { if (adm) botao('Voltar para pendente', 'Pendente', 'sec'); nota('Aguardando o membro corrigir e reenviar.'); }
     if (p.status === 'Recusado') { if (adm) botao('Reabrir pedido', 'Pendente', 'sec'); else nota('Pedido recusado.'); }
     if (p.status === 'Pago') nota('Pedido concluído.');
@@ -487,49 +511,134 @@
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
   });
 
-  /* ---------- Membros (só Admin) ---------- */
+  /* ---------- Fotos (redondas) ---------- */
+  function iniciais(nome) {
+    const p = String(nome || '?').trim().split(/\s+/).filter(Boolean);
+    return ((p[0] || '?')[0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase();
+  }
+  function avatar(nome, foto, cls) {
+    const a = el('span', 'avatar ' + (cls || '')); a.setAttribute('aria-hidden', 'true');
+    a.appendChild(el('span', '', iniciais(nome)));
+    if (foto) { const i = el('img'); i.alt = ''; i.referrerPolicy = 'no-referrer'; i.onerror = () => i.remove(); i.src = foto; a.appendChild(i); }
+    return a;
+  }
+  // Recorta a foto no centro e reduz para 240×240 antes de enviar (fica leve e rápida)
+  function reduzirFoto(file) {
+    return new Promise((ok, falha) => {
+      if (!/^image\//.test(file.type)) return falha(new Error('Escolha um arquivo de imagem (JPG, PNG ou WEBP).'));
+      const url = URL.createObjectURL(file), img = new Image();
+      img.onload = () => {
+        const lado = Math.min(img.width, img.height), c = document.createElement('canvas');
+        c.width = c.height = 240;
+        c.getContext('2d').drawImage(img, (img.width - lado) / 2, (img.height - lado) / 2, lado, lado, 0, 0, 240, 240);
+        URL.revokeObjectURL(url);
+        const dataUrl = c.toDataURL('image/jpeg', 0.82);
+        ok({ tipo: 'image/jpeg', base64: dataUrl.split(',')[1], dataUrl });
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); falha(new Error('Não foi possível abrir esta imagem. Tente uma foto JPG ou PNG.')); };
+      img.src = url;
+    });
+  }
+  const classePapel = p => 'papel-' + String(p).normalize('NFD').replace(/[^\w]/g, '');
+
+  /* ---------- Membros (Presidência e Gestão de Pessoas) ---------- */
   async function carregarMembros() {
-    if (!ehAdmin()) return;
+    if (!podeGerir()) return;
     $('mb-vazio').hidden = false; $('mb-vazio').textContent = 'Carregando membros…'; $('mb-linhas').innerHTML = '';
     try { membros = (await api('mbListar')).membros; renderMembros(); }
     catch (e) { if (!e.sessao) $('mb-vazio').textContent = e.message; }
   }
   $('mb-atualizar').addEventListener('click', carregarMembros);
   $('mb-busca').addEventListener('input', renderMembros);
+  // A Gestão de Pessoas não mexe em quem é da Presidência
+  const podeMexer = m => !m.voce && (ehPres() || m.papel !== PRES);
+
   function renderMembros() {
     const q = $('mb-busca').value.trim().toLowerCase(), tb = $('mb-linhas'); tb.innerHTML = '';
-    const lista = membros.filter(m => !q || (m.nome + ' ' + m.email).toLowerCase().includes(q));
+    const lista = membros.filter(m => !q || (m.nome + ' ' + m.email + ' ' + m.papel).toLowerCase().includes(q));
     lista.forEach(m => {
       const tr = el('tr'); tr.tabIndex = 0;
-      const n = el('td'); n.appendChild(el('b', '', m.nome || '—')); if (m.voce) n.appendChild(el('span', 'nota', ' (você)')); tr.appendChild(n);
+      const n = el('td'); const pessoa = el('div', 'pessoa');
+      pessoa.appendChild(avatar(m.nome, m.foto, 'sm'));
+      const nm = el('div'); nm.appendChild(el('b', '', m.nome || '—')); if (m.voce) nm.appendChild(el('span', 'nota', ' (você)'));
+      pessoa.appendChild(nm); n.appendChild(pessoa); tr.appendChild(n);
       tr.appendChild(el('td', '', m.email));
-      const pp = el('td'); pp.appendChild(el('span', 'pilula papel-' + m.papel, m.papel)); tr.appendChild(pp);
+      const pp = el('td'); pp.appendChild(el('span', 'pilula ' + classePapel(m.papel), m.papel)); tr.appendChild(pp);
       const at = el('td'); at.appendChild(el('span', 'pilula ' + (m.ativo ? 'st-Aprovado' : 'st-Recusado'), m.ativo ? 'Ativo' : 'Bloqueado')); tr.appendChild(at);
       tr.appendChild(el('td', 'nota', m.ultimoAcesso ? API.dataBR(m.ultimoAcesso) : 'Nunca entrou'));
-      tr.addEventListener('click', () => abrirMembro(m));
-      tr.addEventListener('keydown', e => { if (e.key === 'Enter') abrirMembro(m); });
+      const ac = el('td', 'acoes-linha');
+      if (podeMexer(m)) {
+        const x = el('button', 'btn-excluir', 'Excluir'); x.type = 'button'; x.title = 'Excluir ' + m.nome;
+        x.addEventListener('click', ev => { ev.stopPropagation(); excluir(m, x); });
+        ac.appendChild(x);
+      }
+      tr.appendChild(ac);
+      tr.addEventListener('click', () => { if (podeMexer(m) || m.voce) abrirMembro(m); });
+      tr.addEventListener('keydown', e => { if (e.key === 'Enter' && (podeMexer(m) || m.voce)) abrirMembro(m); });
+      if (!podeMexer(m) && !m.voce) tr.classList.add('travada');
       tb.appendChild(tr);
     });
     $('mb-vazio').hidden = lista.length > 0;
     $('mb-vazio').textContent = membros.length ? 'Ninguém encontrado com essa busca.' : 'Nenhum membro cadastrado.';
   }
-  const DICA_PAPEL = { Membro: 'Pede reembolso e acompanha os próprios pedidos.', Financeiro: 'Também aprova os pedidos pendentes.', Admin: 'Também paga, recusa, pede revisão e gerencia membros.' };
-  $('m-papel').addEventListener('input', () => { $('m-papel-dica').textContent = DICA_PAPEL[$('m-papel').value]; });
+
+  // Excluir pede um segundo clique para confirmar (na linha e no formulário)
+  async function excluir(m, btn) {
+    if (!btn.dataset.confirmar) {
+      btn.dataset.confirmar = '1'; const orig = btn.textContent;
+      btn.textContent = 'Confirmar exclusão'; btn.classList.add('confirmar');
+      setTimeout(() => { if (btn.isConnected && btn.dataset.confirmar) { delete btn.dataset.confirmar; btn.textContent = orig; btn.classList.remove('confirmar'); } }, 5000);
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Excluindo…';
+    try { await api('mbRemover', { email: m.email }); if ($('dlg-membro').open) $('dlg-membro').close(); await carregarMembros(); }
+    catch (err) { if (!err.sessao) { const box = $('dlg-membro').open ? $('m-erro') : $('mb-erro'); box.textContent = err.message; box.hidden = false; } btn.disabled = false; }
+  }
+
+  const DICA_PAPEL = {
+    'Membro': 'Pede reembolso e acompanha os próprios pedidos.',
+    'Financeiro': 'Também aprova os pedidos de reembolso pendentes.',
+    'Gestão de Pessoas': 'Também adiciona, edita e exclui membros.',
+    'Marketing': 'Mesmo acesso de Membro.', 'Comercial': 'Mesmo acesso de Membro.', 'Esportes': 'Mesmo acesso de Membro.',
+    'Conselho': 'Mesmo acesso de Membro.', 'Eventos': 'Mesmo acesso de Membro.',
+    'Presidência': 'Acesso total: paga, recusa, pede revisão e gerencia todos os membros.'
+  };
+  function montarPapeis(atual) {
+    const sel = $('m-papel'); sel.innerHTML = '';
+    PAPEIS.filter(p => ehPres() || p !== PRES || atual === PRES).forEach(p => { const o = el('option', '', p); o.value = p; sel.appendChild(o); });
+    sel.value = atual || 'Membro';
+  }
+  $('m-papel').addEventListener('input', () => { $('m-papel-dica').textContent = DICA_PAPEL[$('m-papel').value] || ''; });
+
+  let fotoNova = null, removerFoto = false;
+  function mostrarPreviaFoto(nome, foto) {
+    const prev = $('m-foto-prev'); prev.innerHTML = ''; prev.appendChild(avatar(nome || $('m-nome').value, foto, 'lg'));
+    $('m-foto-rem').hidden = !foto;
+  }
   function abrirMembro(m) {
-    membroAtual = m || null;
+    membroAtual = m || null; fotoNova = null; removerFoto = false;
     $('m-titulo').textContent = m ? 'Editar membro' : 'Adicionar membro';
     $('m-nome').value = m ? m.nome : ''; $('m-email').value = m ? m.email : '';
-    $('m-papel').value = m ? m.papel : 'Membro'; $('m-ativo').value = !m || m.ativo ? 'sim' : 'nao';
-    $('m-papel-dica').textContent = DICA_PAPEL[$('m-papel').value];
-    $('m-senha').value = '';
+    montarPapeis(m ? m.papel : 'Membro');
+    $('m-ativo').value = !m || m.ativo ? 'sim' : 'nao';
+    $('m-papel-dica').textContent = DICA_PAPEL[$('m-papel').value] || '';
+    $('m-senha').value = ''; $('m-foto').value = '';
     $('m-senha-rot').textContent = m ? 'Nova senha (opcional)' : 'Senha';
     $('m-senha-dica').textContent = m ? 'Deixe em branco para manter a senha atual.' : 'A pessoa pode trocar depois em "Minha conta".';
     $('m-enviar').checked = !m;
-    const rm = $('m-remover'); rm.hidden = !m || m.voce; rm.textContent = 'Remover membro'; delete rm.dataset.confirmar;
+    mostrarPreviaFoto(m ? m.nome : '', m ? m.foto : '');
+    const rm = $('m-remover'); rm.hidden = !m || !podeMexer(m); rm.textContent = 'Excluir membro'; rm.disabled = false; delete rm.dataset.confirmar; rm.classList.remove('confirmar');
     $('m-papel').disabled = $('m-ativo').disabled = !!(m && m.voce);
     $('m-erro').hidden = true;
     $('dlg-membro').showModal(); $('m-nome').focus();
   }
+  $('m-nome').addEventListener('input', () => { if (!fotoNova && !(membroAtual && membroAtual.foto && !removerFoto)) mostrarPreviaFoto($('m-nome').value, ''); });
+  $('m-foto').addEventListener('change', async () => {
+    const f = $('m-foto').files[0]; if (!f) return;
+    try { fotoNova = await reduzirFoto(f); removerFoto = false; mostrarPreviaFoto($('m-nome').value, fotoNova.dataUrl); $('m-erro').hidden = true; }
+    catch (err) { $('m-erro').textContent = err.message; $('m-erro').hidden = false; }
+  });
+  $('m-foto-rem').addEventListener('click', () => { fotoNova = null; removerFoto = !!(membroAtual && membroAtual.foto); $('m-foto').value = ''; mostrarPreviaFoto($('m-nome').value, ''); });
   $('mb-novo').addEventListener('click', () => abrirMembro(null));
   $('m-fechar').addEventListener('click', () => $('dlg-membro').close());
   $('m-gerar').addEventListener('click', () => {
@@ -550,19 +659,37 @@
     const b = $('m-salvar'); b.disabled = true; b.textContent = 'Salvando…';
     try {
       await api('mbSalvar', { original: membroAtual ? membroAtual.email : '', nome, email, senha,
-        papel: $('m-papel').value, ativo: $('m-ativo').value === 'sim', enviarEmail: $('m-enviar').checked });
+        papel: $('m-papel').value, ativo: $('m-ativo').value === 'sim', enviarEmail: $('m-enviar').checked,
+        foto: fotoNova ? { tipo: fotoNova.tipo, base64: fotoNova.base64 } : null, removerFoto });
+      if (membroAtual && membroAtual.voce) await atualizarMeuPerfil();
       $('dlg-membro').close(); await carregarMembros();
     } catch (err) { if (!err.sessao) erro(err.message); }
     finally { b.disabled = false; b.textContent = 'Salvar'; }
   });
-  // Remover pede um segundo clique para confirmar
-  $('m-remover').addEventListener('click', async () => {
-    const rm = $('m-remover');
-    if (!rm.dataset.confirmar) { rm.dataset.confirmar = '1'; rm.textContent = 'Clique de novo para remover ' + (membroAtual.nome.split(' ')[0] || 'este membro'); return; }
-    rm.disabled = true; rm.textContent = 'Removendo…';
-    try { await api('mbRemover', { email: membroAtual.email }); $('dlg-membro').close(); await carregarMembros(); }
-    catch (err) { if (!err.sessao) { $('m-erro').textContent = err.message; $('m-erro').hidden = false; } }
-    finally { rm.disabled = false; }
+  $('m-remover').addEventListener('click', () => excluir(membroAtual, $('m-remover')));
+
+  /* ---------- Minha foto ---------- */
+  function mostrarMinhaFoto() {
+    const pf = $('p-foto'); pf.innerHTML = ''; pf.appendChild(avatar(perfil.nome || perfil.email, perfil.foto, 'md'));
+    const cf = $('c-foto-prev'); cf.innerHTML = ''; cf.appendChild(avatar(perfil.nome || perfil.email, perfil.foto, 'lg'));
+    $('c-foto-rem').hidden = !perfil.foto;
+  }
+  async function atualizarMeuPerfil() { try { const r = await api('eu'); perfil = r.perfil; mostrarMinhaFoto(); } catch (e) {} }
+  $('c-foto').addEventListener('change', async () => {
+    const f = $('c-foto').files[0], box = $('c-foto-aviso'); if (!f) return;
+    box.hidden = true;
+    try {
+      const nova = await reduzirFoto(f);
+      box.className = 'aviso info'; box.textContent = 'Enviando foto…'; box.hidden = false;
+      const r = await api('contaFoto', { foto: { tipo: nova.tipo, base64: nova.base64 } });
+      perfil.foto = r.foto; mostrarMinhaFoto(); box.textContent = 'Foto atualizada!';
+    } catch (err) { if (!err.sessao) { box.className = 'aviso erro'; box.textContent = err.message; box.hidden = false; } }
+    finally { $('c-foto').value = ''; }
+  });
+  $('c-foto-rem').addEventListener('click', async () => {
+    const box = $('c-foto-aviso');
+    try { await api('contaFoto', { remover: true }); perfil.foto = ''; mostrarMinhaFoto(); box.className = 'aviso info'; box.textContent = 'Foto removida.'; box.hidden = false; }
+    catch (err) { if (!err.sessao) { box.className = 'aviso erro'; box.textContent = err.message; box.hidden = false; } }
   });
 
   /* ---------- Conta ---------- */
