@@ -120,15 +120,62 @@ As mensagens chegam no e-mail definido na aba **Config** e ficam registradas na 
 
 ## Área do membro
 
-- **Início:** saudação, atalhos e o mural de avisos (aba *Avisos*).
+- **Início:** mural de avisos no topo (os 3 mais recentes, com *Ver todos*), sua contagem de presenças e faltas, panorama financeiro, ranking e atalhos.
 - **Pedir reembolso:** o nome e o e-mail vão automaticamente; as categorias e os projetos vêm da aba *Config* da planilha de reembolsos.
 - **Meus pedidos:** status e comentários de cada pedido.
 - **Gerenciar reembolsos:** só para Financeiro e Presidência. Tem filtros, detalhes, histórico e exportação em CSV.
+- **Eventos internos:** só para Presidência e Gestão de Pessoas. Cria eventos e registra a presença.
 - **Membros:** só para Presidência e Gestão de Pessoas. Serve para adicionar, editar, bloquear e excluir membros, com foto.
 - **Minha conta:** trocar a foto e a senha.
 
 A sessão dura 6 horas sem uso. Depois disso, é preciso entrar de novo.
 
+## Vendas, estoque, compras e panorama financeiro
+
+Ficam na planilha do Portal, nas abas **Itens**, **Vendas** e **Compras**, criadas ao rodar *configurar*.
+
+| Tela | Quem usa | O que faz |
+|---|---|---|
+| **Panorama financeiro** (no Início) | Todos | Lucro previsto, previsão de despesas, saldo previsto e gráfico de 6 meses |
+| **Vendas** | Todos | Registrar venda; o estoque baixa sozinho. Cada um vê as próprias vendas |
+| **Estoque** | Financeiro e Presidência | Cadastrar e editar itens: preço, custo, quantidade e estoque mínimo |
+| **Compras** | Financeiro e Presidência | Registrar compra prevista ou recebida e marcar quando chegou |
+
+**Como as contas são feitas:**
+
+- **Lucro previsto com vendas** = lucro das vendas do mês (preço − custo) + o que o estoque atual renderia se fosse todo vendido.
+- **Previsão de despesas** = reembolsos ainda não pagos (Pendente, Aprovado ou Em revisão) + compras *previstas*.
+- **Saldo previsto** = lucro previsto − previsão de despesas.
+
+**Regras:**
+
+- Uma venda só é registrada se houver estoque. Itens zerados aparecem desabilitados na lista.
+- **Compra recebida** soma no estoque e recalcula o **custo médio**. Exemplo: 7 camisetas a R$ 20 + 7 a R$ 26 = custo de R$ 23.
+- **Compra prevista** não mexe no estoque. Quando chegar, clique em **Chegou**.
+- Financeiro e Presidência veem todas as vendas, com o lucro, e podem **cancelar** uma venda errada. O item volta para o estoque.
+- Itens não são apagados: use *Desativado* para tirá-los da lista de venda sem perder o histórico.
+- Para corrigir uma contagem de estoque, edite o item e preencha **Corrigir estoque**.
+
+### Ranking (gamificação)
+
+No Início, um cartão compacto com duas abas:
+
+- **Vendas:** quem mais vendeu no mês (em valor; desconsidera canceladas), com a barra da **meta da equipe**. A meta fica em *Meta de vendas do mês (R$)*, na aba **Config**. Com 0, a barra some.
+- **Presença:** quem mais esteve presente nos eventos internos, com a taxa de presença.
+- Mostra o top 5 e a sua posição (se você estiver fora do top 5, sua linha aparece no fim). Os e-mails não aparecem.
+
+## Eventos internos e presença (Presidência e Gestão de Pessoas)
+
+Ficam nas abas **Eventos** e **Presenças** da planilha do Portal, criadas ao rodar *configurar*.
+
+1. Em **Eventos internos**, clique em **+ Novo evento**: nome, data, local e descrição (opcionais).
+2. Clique em **Lista de presença**. Aparecem todos os membros ativos. Marque cada um como **Presente**, **Faltou** ou **Justificou**. Clicar de novo na mesma opção limpa a marcação.
+3. **Marcar todos sem registro como presentes** agiliza: marque só as faltas e as justificativas e depois use o botão.
+4. Clique em **Salvar presenças**. Dá para reabrir e corrigir quando quiser.
+5. **Apagar** (com confirmação) remove o evento e as presenças dele, que deixam de contar no ranking.
+
+Cada membro vê no Início a própria contagem: presenças, faltas e justificadas. A partir de 3 faltas, o quadro fica em destaque. **Justificou** não conta como falta, mas também não conta como presença no ranking.
+
 ## Próximas funções
 
-O portal foi montado para crescer. Cada nova função vira mais um item no menu lateral (como *Pedir reembolso*) e mais uma ação no `Code.gs`. Exemplos que encaixam bem: lista de presença em reuniões, controle de caixa, cadastro de patrocinadores.
+O portal foi montado para crescer. Cada nova função vira mais um item no menu lateral (como *Pedir reembolso*) e mais uma ação no `Code.gs`. Exemplos que encaixam bem: controle de caixa, cadastro de patrocinadores.

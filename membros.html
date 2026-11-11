@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Mono:wght@500&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
-<link rel="stylesheet" href="assets/styles.css?v=3">
+<link rel="stylesheet" href="assets/styles.css?v=6">
 </head>
 <body data-pagina="membros">
 <div id="topo"></div>
@@ -38,7 +38,11 @@
     <button type="button" data-aba="inicio"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Início</button>
     <button type="button" data-aba="novo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Pedir reembolso</button>
     <button type="button" data-aba="meus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Meus pedidos</button>
+    <button type="button" data-aba="vendas"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg>Vendas</button>
+    <button type="button" data-aba="estoque" data-papeis="Financeiro,Presidência" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>Estoque</button>
+    <button type="button" data-aba="compras" data-papeis="Financeiro,Presidência" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h12L22 7H6"/></svg>Compras</button>
     <button type="button" data-aba="aprovar" data-papeis="Financeiro,Presidência" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gerenciar reembolsos</button>
+    <button type="button" data-aba="eventos" data-papeis="Presidência,Gestão de Pessoas" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M8.5 15l2.5 2.5 4.5-5"/></svg>Eventos internos</button>
     <button type="button" data-aba="membros" data-papeis="Presidência,Gestão de Pessoas" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.2 2.6 3.6 5.5"/></svg>Membros</button>
     <button type="button" data-aba="conta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Minha conta</button>
     <button type="button" class="sair" id="b-sair"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h4v16h-4"/><path d="M10 8l-4 4 4 4M6 12h10"/></svg>Sair</button>
@@ -51,13 +55,40 @@
     <section data-painel="inicio" hidden>
       <div class="painel">
         <div class="painel-head"><span class="eyebrow">Portal da equipe</span><h1 id="ola">Olá!</h1><p>O que você quer fazer hoje?</p></div>
+        <div class="painel-head"><h2>Mural de avisos</h2></div>
+        <div class="avisos" id="avisos"></div>
+        <button class="linkbtn" id="avisos-mais" type="button" hidden></button>
+
+        <div class="minhas-presencas" id="minhas-presencas" hidden></div>
+
+        <!-- Panorama financeiro (todos) -->
+        <section class="dash" id="dash" aria-label="Panorama financeiro">
+          <div class="dash-head"><h2>Panorama financeiro</h2><span class="nota" id="dash-mes"></span></div>
+          <div class="dash-kpis" id="dash-kpis"><div class="vazio">Carregando números…</div></div>
+          <div class="dash-grade">
+            <div class="cartao dash-grafico">
+              <header><span class="eyebrow">Últimos 6 meses</span><h3>Vendas e lucro</h3></header>
+              <div class="legenda"><span><i class="lg-fat"></i>Vendas</span><span><i class="lg-luc"></i>Lucro</span></div>
+              <div class="barras6" id="dash-barras" role="img" aria-label="Gráfico de vendas e lucro por mês"></div>
+            </div>
+            <div class="cartao ranking" id="ranking">
+              <div class="rk-head">
+                <h3>Ranking</h3>
+                <div class="abas rk-abas" role="tablist"><button type="button" role="tab" data-rk="vendas" aria-selected="true">Vendas</button><button type="button" role="tab" data-rk="presenca" aria-selected="false">Presença</button></div>
+              </div>
+              <div class="rk-meta" id="rk-meta" hidden></div>
+              <div class="rk-voce" id="rk-voce"></div>
+              <ol class="rk-lista" id="rk-lista"></ol>
+            </div>
+          </div>
+        </section>
+
         <div class="atalhos">
+          <button class="atalho" type="button" data-ir="vendas"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg></span><b>Registrar venda</b><span>Vendeu um produto? Lance aqui e o estoque atualiza.</span></button>
           <button class="atalho" type="button" data-ir="novo"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><b>Pedir reembolso</b><span>Pagou algo pela instituição? Envie o comprovante.</span></button>
           <button class="atalho" type="button" data-ir="meus"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span><b>Meus pedidos</b><span>Veja o status dos seus reembolsos.</span></button>
           <button class="atalho" type="button" data-ir="aprovar" data-papeis="Financeiro,Presidência" hidden><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b>Gerenciar reembolsos</b><span id="at-pend">Pedidos esperando você.</span></button>
         </div>
-        <div class="painel-head"><h2>Mural de avisos</h2></div>
-        <div class="avisos" id="avisos"></div>
       </div>
     </section>
 
@@ -123,6 +154,105 @@
       </div>
     </section>
 
+    <!-- Vendas (todos) -->
+    <section data-painel="vendas" hidden>
+      <div class="painel">
+        <div class="cartao">
+          <header><span class="eyebrow">Vendas</span><h2>Registrar venda</h2><p>Escolha o item e a quantidade. O estoque baixa sozinho.</p></header>
+          <form id="f-venda" class="grade" novalidate>
+            <div class="campo inteiro"><label for="vd-item">Item</label><select id="vd-item"><option value="">Carregando…</option></select><span class="dica" id="vd-item-dica"></span></div>
+            <div class="campo"><label for="vd-qtd">Quantidade</label><input id="vd-qtd" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
+            <div class="campo"><label for="vd-preco">Preço unitário</label><div class="prefixo"><span>R$</span><input id="vd-preco" inputmode="decimal" placeholder="0,00"></div></div>
+            <div class="campo"><label for="vd-pag">Pagamento</label><select id="vd-pag"></select></div>
+            <div class="campo"><label for="vd-obs">Observação (opcional)</label><input id="vd-obs" placeholder="Ex.: tamanho M, venda no evento X"></div>
+            <div class="total-linha inteiro"><span>Total da venda</span><b id="vd-total">R$ 0,00</b></div>
+            <div id="vd-aviso" class="aviso inteiro" hidden role="status"></div>
+            <div class="acoes inteiro"><button class="btn grande" id="vd-enviar" type="submit">Registrar venda</button></div>
+          </form>
+        </div>
+        <div class="painel-head" style="display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap">
+          <h2 id="vd-lista-titulo">Minhas vendas</h2>
+          <button class="btn sec peq" id="vd-atualizar" type="button">Atualizar</button>
+        </div>
+        <div id="vd-erro" class="aviso erro" hidden role="alert"></div>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Venda</th><th>Data</th><th>Item</th><th style="text-align:right">Qtd.</th><th style="text-align:right">Total</th><th class="so-gestor" style="text-align:right">Lucro</th><th>Pagamento</th><th class="so-gestor">Vendido por</th><th><span class="sr">Ações</span></th></tr></thead>
+            <tbody id="vd-linhas"></tbody>
+          </table>
+          <div class="vazio" id="vd-vazio" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estoque (Financeiro e Presidência) -->
+    <section data-painel="estoque" hidden>
+      <div class="painel">
+        <div class="painel-head" style="display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap">
+          <div style="display:grid;gap:6px"><span class="eyebrow">Financeiro</span><h2>Estoque</h2><p class="nota">Itens à venda, preço, custo e quantidade. Clique num item para editar.</p></div>
+          <div class="acoes"><button class="btn sec peq" id="it-atualizar" type="button">Atualizar</button><button class="btn peq" id="it-novo" type="button">+ Novo item</button></div>
+        </div>
+        <div class="resumo" id="it-resumo"></div>
+        <div class="filtros"><input id="it-busca" type="search" placeholder="Buscar item ou categoria" aria-label="Buscar item"></div>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Item</th><th>Categoria</th><th style="text-align:right">Preço</th><th style="text-align:right">Custo</th><th style="text-align:right">Lucro/un.</th><th style="text-align:right">Estoque</th><th>Situação</th></tr></thead>
+            <tbody id="it-linhas"></tbody>
+          </table>
+          <div class="vazio" id="it-vazio" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compras (Financeiro e Presidência) -->
+    <section data-painel="compras" hidden>
+      <div class="painel">
+        <div class="cartao">
+          <header><span class="eyebrow">Financeiro</span><h2>Registrar compra</h2><p>Compra <b>prevista</b> entra na previsão de despesas. Compra <b>recebida</b> soma no estoque e atualiza o custo médio do item.</p></header>
+          <form id="f-compra" class="grade" novalidate>
+            <div class="campo inteiro"><label for="cp-item">Item</label><select id="cp-item"><option value="">Carregando…</option></select><span class="dica">O item precisa estar cadastrado no Estoque.</span></div>
+            <div class="campo"><label for="cp-qtd">Quantidade</label><input id="cp-qtd" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
+            <div class="campo"><label for="cp-custo">Custo unitário</label><div class="prefixo"><span>R$</span><input id="cp-custo" inputmode="decimal" placeholder="0,00"></div></div>
+            <div class="campo"><label for="cp-forn">Fornecedor</label><input id="cp-forn" placeholder="Ex.: Gráfica Silva"></div>
+            <div class="campo"><label for="cp-data">Data</label><input id="cp-data" type="date"></div>
+            <div class="campo inteiro"><span style="font-weight:700;font-size:14px">Situação</span>
+              <div class="escolha" role="radiogroup">
+                <label><input type="radio" name="cp-status" value="Prevista" checked> <span><b>Prevista</b> ainda vai comprar ou receber</span></label>
+                <label><input type="radio" name="cp-status" value="Recebida"> <span><b>Recebida</b> já chegou e entra no estoque</span></label>
+              </div></div>
+            <div class="campo inteiro"><label for="cp-obs">Observação (opcional)</label><input id="cp-obs"></div>
+            <div class="total-linha inteiro"><span>Total da compra</span><b id="cp-total">R$ 0,00</b></div>
+            <div id="cp-aviso" class="aviso inteiro" hidden role="status"></div>
+            <div class="acoes inteiro"><button class="btn grande" id="cp-enviar" type="submit">Registrar compra</button></div>
+          </form>
+        </div>
+        <div class="painel-head" style="display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap">
+          <h2>Compras</h2><button class="btn sec peq" id="cp-atualizar" type="button">Atualizar</button>
+        </div>
+        <div id="cp-erro" class="aviso erro" hidden role="alert"></div>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Compra</th><th>Data</th><th>Item</th><th style="text-align:right">Qtd.</th><th style="text-align:right">Total</th><th>Fornecedor</th><th>Situação</th><th><span class="sr">Ações</span></th></tr></thead>
+            <tbody id="cp-linhas"></tbody>
+          </table>
+          <div class="vazio" id="cp-vazio" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eventos internos e presença (Presidência e Gestão de Pessoas) -->
+    <section data-painel="eventos" hidden>
+      <div class="painel">
+        <div class="painel-head" style="display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap">
+          <div style="display:grid;gap:6px"><span class="eyebrow">Gestão de pessoas</span><h2>Eventos internos</h2><p class="nota">Reuniões, treinamentos e encontros da equipe. Abra a chamada para marcar quem esteve presente.</p></div>
+          <div class="acoes"><button class="btn sec peq" id="ev-atualizar" type="button">Atualizar</button><button class="btn peq" id="ev-novo" type="button">+ Novo evento</button></div>
+        </div>
+        <div id="ev-erro" class="aviso erro" hidden role="alert"></div>
+        <div class="eventos" id="ev-lista"></div>
+        <div class="vazio" id="ev-vazio" hidden></div>
+      </div>
+    </section>
+
     <!-- Membros (Presidência e Gestão de Pessoas) -->
     <section data-painel="membros" hidden>
       <div class="painel">
@@ -183,6 +313,55 @@
   </div>
 </dialog>
 
+<dialog id="dlg-item" aria-labelledby="it-titulo">
+  <form class="det" id="f-item" novalidate>
+    <header><h2 id="it-titulo">Novo item</h2><button class="fechar" id="it-fechar" type="button" aria-label="Fechar">×</button></header>
+    <div class="grade">
+      <div class="campo inteiro"><label for="it-nome">Nome do item</label><input id="it-nome" placeholder="Ex.: Camiseta oficial 2026"></div>
+      <div class="campo inteiro"><label for="it-cat">Categoria</label><input id="it-cat" list="it-cats" placeholder="Ex.: Roupas, Canecas, Ingressos"><datalist id="it-cats"></datalist></div>
+      <div class="campo"><label for="it-preco">Preço de venda</label><div class="prefixo"><span>R$</span><input id="it-preco" inputmode="decimal" placeholder="0,00"></div></div>
+      <div class="campo"><label for="it-custo">Custo unitário</label><div class="prefixo"><span>R$</span><input id="it-custo" inputmode="decimal" placeholder="0,00"></div><span class="dica">Quanto a instituição paga por unidade.</span></div>
+      <div class="campo"><label for="it-estoque" id="it-estoque-rot">Estoque inicial</label><input id="it-estoque" type="number" min="0" step="1" inputmode="numeric"><span class="dica" id="it-estoque-dica"></span></div>
+      <div class="campo"><label for="it-min">Avisar quando tiver menos de</label><input id="it-min" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
+      <div class="campo inteiro"><label for="it-ativo">Situação</label><select id="it-ativo"><option value="sim">À venda</option><option value="nao">Desativado (some da lista de venda)</option></select></div>
+      <div class="total-linha inteiro"><span>Lucro por unidade</span><b id="it-margem">R$ 0,00</b></div>
+    </div>
+    <div id="it-erro" class="aviso erro" hidden role="alert"></div>
+    <div class="acoes" style="justify-content:flex-end"><button class="btn" id="it-salvar" type="submit">Salvar item</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-evento" aria-labelledby="ev-titulo">
+  <form class="det" id="f-evento" novalidate>
+    <header><h2 id="ev-titulo">Novo evento</h2><button class="fechar" id="ev-fechar" type="button" aria-label="Fechar">×</button></header>
+    <div class="grade">
+      <div class="campo inteiro"><label for="ev-nome">Nome do evento</label><input id="ev-nome" placeholder="Ex.: Reunião geral de novembro"></div>
+      <div class="campo"><label for="ev-data">Data</label><input id="ev-data" type="date"></div>
+      <div class="campo"><label for="ev-local">Local (opcional)</label><input id="ev-local" placeholder="Ex.: Sala 204"></div>
+      <div class="campo inteiro"><label for="ev-desc">Descrição (opcional)</label><textarea id="ev-desc" style="min-height:80px"></textarea></div>
+    </div>
+    <div id="ev-form-erro" class="aviso erro" hidden role="alert"></div>
+    <div class="acoes" style="justify-content:flex-end"><button class="btn" id="ev-salvar" type="submit">Salvar evento</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-chamada" class="largo-dlg" aria-labelledby="ch-titulo">
+  <div class="det">
+    <header>
+      <div style="display:grid;gap:4px"><span class="eyebrow">Lista de presença</span><h2 id="ch-titulo"></h2><span class="nota" id="ch-sub"></span></div>
+      <button class="fechar" id="ch-fechar" type="button" aria-label="Fechar">×</button>
+    </header>
+    <div class="ch-barra">
+      <input id="ch-busca" type="search" placeholder="Buscar membro" aria-label="Buscar membro">
+      <button class="btn sec peq" id="ch-todos" type="button">Marcar todos sem registro como presentes</button>
+    </div>
+    <div class="ch-contagem" id="ch-contagem"></div>
+    <div class="chamada" id="ch-lista"></div>
+    <div id="ch-erro" class="aviso erro" hidden role="alert"></div>
+    <div class="acoes" style="justify-content:space-between"><span class="nota" id="ch-pendente"></span><button class="btn" id="ch-salvar" type="button">Salvar presenças</button></div>
+  </div>
+</dialog>
+
 <dialog id="dlg-membro" aria-labelledby="m-titulo">
   <form class="det" id="f-membro" novalidate>
     <header>
@@ -220,10 +399,10 @@
 </dialog>
 
 <footer id="rodape"></footer>
-<script src="config.js?v=3"></script>
-<script src="conteudo.js?v=3"></script>
-<script src="assets/api.js?v=3"></script>
-<script src="assets/site.js?v=3"></script>
+<script src="config.js?v=6"></script>
+<script src="conteudo.js?v=6"></script>
+<script src="assets/api.js?v=6"></script>
+<script src="assets/site.js?v=6"></script>
 <script>
 (function () {
   const $ = id => document.getElementById(id);
@@ -274,13 +453,20 @@
     $('ola').textContent = 'Olá, ' + (perfil.nome || '').split(' ')[0] + '!';
     document.querySelectorAll('[data-papeis]').forEach(x => { x.hidden = x.dataset.papeis.split(',').indexOf(perfil.papel) < 0; });
     // Mural
-    const av = $('avisos'); av.innerHTML = '';
-    if (!r.avisos.length) av.appendChild(el('p', 'nota', 'Nenhum aviso no momento.'));
-    r.avisos.forEach(a => { const d = el('article', 'aviso-item'); d.append(el('span', 'data-chip', SITE.dataBonita(a.data)), el('b', '', a.titulo), el('p', '', a.texto)); av.appendChild(d); });
+    avisos = r.avisos; avisosTodos = false; renderAvisos();
     if (!r.reembolsoAtivo) { $('p-erro').textContent = 'O reembolso ainda não foi ligado ao portal (falta REEMBOLSOS_PLANILHA_ID no Apps Script).'; $('p-erro').hidden = false; }
     if (podeAprovar()) carregarAprovacao(true);
     rota();
   }
+  let avisos = [], avisosTodos = false;
+  function renderAvisos() {
+    const av = $('avisos'); av.innerHTML = '';
+    if (!avisos.length) av.appendChild(el('p', 'nota', 'Nenhum aviso no momento.'));
+    (avisosTodos ? avisos : avisos.slice(0, 3)).forEach(a => { const d = el('article', 'aviso-item'); d.append(el('span', 'data-chip', SITE.dataBonita(a.data)), el('b', '', a.titulo), el('p', '', a.texto)); av.appendChild(d); });
+    const mais = $('avisos-mais'); mais.hidden = avisos.length <= 3;
+    mais.textContent = avisosTodos ? 'Mostrar só os mais recentes' : 'Ver todos os avisos (' + avisos.length + ')';
+  }
+  $('avisos-mais').addEventListener('click', () => { avisosTodos = !avisosTodos; renderAvisos(); });
   const podeAprovar = () => perfil && ['Financeiro', PRES].indexOf(perfil.papel) >= 0;
   const ehPres = () => perfil && perfil.papel === PRES;
   const podeGerir = () => perfil && [PRES, GP].indexOf(perfil.papel) >= 0;
@@ -289,12 +475,17 @@
   function rota() {
     if (!perfil) return;
     let aba = location.hash.slice(1) || 'inicio';
-    if (!document.querySelector('[data-painel="' + aba + '"]') || (aba === 'aprovar' && !podeAprovar()) || (aba === 'membros' && !podeGerir())) aba = 'inicio';
+    if (!document.querySelector('[data-painel="' + aba + '"]') || (aba === 'aprovar' && !podeAprovar()) || (aba === 'membros' && !podeGerir()) || ((aba === 'estoque' || aba === 'compras') && !podeAprovar()) || (aba === 'eventos' && !podeGerir())) aba = 'inicio';
     document.querySelectorAll('[data-painel]').forEach(s => s.hidden = s.dataset.painel !== aba);
     document.querySelectorAll('.lado [data-aba]').forEach(b => b.setAttribute('aria-current', String(b.dataset.aba === aba)));
     if (aba === 'novo') { carregarRbConfig(); if (manterCorrecao) manterCorrecao = false; else if (correcao) sairCorrecao(); }
     else if (correcao) sairCorrecao();
     if (aba === 'membros') carregarMembros();
+    if (aba === 'inicio') carregarDash();
+    if (aba === 'vendas') { carregarItens(); carregarVendas(); }
+    if (aba === 'estoque') carregarItens();
+    if (aba === 'compras') { carregarItens(); carregarCompras(); }
+    if (aba === 'eventos') carregarEventos();
     if (aba === 'meus') carregarMeus();
     if (aba === 'aprovar') carregarAprovacao();
   }
@@ -691,6 +882,412 @@
     try { await api('contaFoto', { remover: true }); perfil.foto = ''; mostrarMinhaFoto(); box.className = 'aviso info'; box.textContent = 'Foto removida.'; box.hidden = false; }
     catch (err) { if (!err.sessao) { box.className = 'aviso erro'; box.textContent = err.message; box.hidden = false; } }
   });
+
+  /* ---------- Dashboard financeiro (todos) ---------- */
+  const R$ = v => API.dinheiro(v);
+  const MESES_C = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  const nomeMes = m => { const [a, b] = String(m).split('-'); return MESES_C[Number(b) - 1] + (a ? '/' + a.slice(2) : ''); };
+  function kpiDash(rot, valor, linhas, cls) {
+    const d = el('div', 'dkpi ' + (cls || ''));
+    d.append(el('span', 'rot', rot), el('span', 'val', valor));
+    (linhas || []).forEach(t => d.appendChild(el('span', 'sub', t)));
+    return d;
+  }
+  async function carregarDash() {
+    try {
+      const d = await api('dash');
+      const [ano, mes] = d.mes.split('-');
+      $('dash-mes').textContent = 'Mês atual: ' + MESES_C[Number(mes) - 1] + '/' + ano;
+      const k = $('dash-kpis'); k.innerHTML = '';
+      k.append(
+        kpiDash('Lucro previsto com vendas', R$(d.lucroPrevisto), [R$(d.vendasMes.lucro) + ' já vendido este mês', '+ ' + R$(d.estoque.lucroPotencial) + ' se vender o estoque todo'], 'destaque'),
+        kpiDash('Previsão de despesas', R$(d.despesas.total), [
+          R$(d.despesas.reembolsos) + ' em reembolsos a pagar (' + d.despesas.reembolsosQtd + ')',
+          R$(d.despesas.compras) + ' em compras previstas (' + d.despesas.comprasQtd + ')'], 'despesa'),
+        kpiDash('Saldo previsto', R$(d.saldoPrevisto), ['lucro previsto − despesas previstas'], d.saldoPrevisto >= 0 ? 'positivo' : 'negativo'),
+        kpiDash('Vendas do mês', R$(d.vendasMes.faturamento), [d.vendasMes.qtd + (d.vendasMes.qtd === 1 ? ' venda registrada' : ' vendas registradas')])
+      );
+      // Gráfico: vendas e lucro por mês (mesma escala para as duas séries)
+      const g = $('dash-barras'); g.innerHTML = '';
+      const max = Math.max(1, ...d.serie.map(s => Math.max(s.faturamento, s.lucro)));
+      d.serie.forEach(s => {
+        const col = el('div', 'col6');
+        const par = el('div', 'par');
+        [['fat', s.faturamento, 'Vendas'], ['luc', s.lucro, 'Lucro']].forEach(([c, v, r]) => {
+          const w = el('div', 'bw');
+          const lab = el('span', 'bv', v ? (v >= 1000 ? (v / 1000).toFixed(1).replace('.', ',') + 'k' : Math.round(v)) : '');
+          const bar = el('div', 'b ' + c); bar.style.height = Math.round(Math.max(0, v) / max * 150) + 'px';
+          w.title = r + ' em ' + nomeMes(s.mes) + ': ' + R$(v);
+          w.append(lab, bar); par.appendChild(w);
+        });
+        col.append(par, el('span', 'bm', nomeMes(s.mes)));
+        g.appendChild(col);
+      });
+      ranking = d.ranking; presenca = d.presenca; renderRanking(); renderMinhasPresencas();
+      if (!d.despesas.reembolsoLigado) $('dash-kpis').appendChild(el('p', 'nota inteiro-dash', 'Os reembolsos não entraram na conta: falta ligar a planilha de reembolsos (REEMBOLSOS_PLANILHA_ID).'));
+    } catch (e) { if (!e.sessao) { $('dash-kpis').innerHTML = ''; $('dash-kpis').appendChild(el('div', 'aviso erro', 'Não foi possível carregar o panorama: ' + e.message)); } }
+  }
+
+  /* ---------- Gamificação compacta: vendas do mês e presença ---------- */
+  let ranking = null, presenca = null, rkAba = 'vendas';
+  document.querySelectorAll('[data-rk]').forEach(b => b.addEventListener('click', () => {
+    rkAba = b.dataset.rk;
+    document.querySelectorAll('[data-rk]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+    renderRanking();
+  }));
+  function renderMinhasPresencas() {
+    const box = $('minhas-presencas'); if (!presenca) return;
+    const e = presenca.eu, total = e.presencas + e.faltas + e.justificadas;
+    box.hidden = false; box.innerHTML = ''; box.className = 'minhas-presencas' + (e.faltas >= 3 ? ' alerta' : '');
+    box.appendChild(el('b', '', 'Sua presença nos eventos internos'));
+    const chips = el('div', 'mp-chips');
+    [['Presenças', e.presencas, 'ok'], ['Faltas', e.faltas, 'falta'], ['Justificadas', e.justificadas, 'just']]
+      .forEach(([r, v, c]) => { const d = el('span', 'mp ' + c); d.append(el('b', '', String(v)), document.createTextNode(' ' + (v === 1 ? r.slice(0, -1) : r).toLowerCase())); chips.appendChild(d); });
+    box.appendChild(chips);
+    box.appendChild(el('span', 'nota', !total ? 'Nenhum evento registrado para você ainda.'
+      : e.faltas === 0 ? 'Nenhuma falta. Continue assim!' : e.faltas >= 3 ? 'Atenção: você já tem ' + e.faltas + ' faltas. Se não puder ir, avise a Gestão de Pessoas para justificar.' : 'Se não puder ir a um evento, avise a Gestão de Pessoas para justificar.'));
+  }
+  function renderRanking() {
+    if (!ranking || !presenca) return;
+    const ehVenda = rkAba === 'vendas';
+    const lista = ehVenda ? (ranking.mes || []) : (presenca.ranking || []);
+    const valor = g => ehVenda ? R$(g.faturamento) : g.presencas + (g.presencas === 1 ? ' presença' : ' presenças');
+    const detalhe = g => ehVenda ? g.vendas + (g.vendas === 1 ? ' venda' : ' vendas') : g.taxa + '% de presença';
+    // meta (só vendas)
+    const meta = $('rk-meta'); meta.hidden = !(ehVenda && ranking.meta > 0); meta.innerHTML = '';
+    if (!meta.hidden) {
+      const pct = Math.min(100, ranking.totalMes / ranking.meta * 100);
+      const t = el('div', 'rk-meta-txt'); t.append(el('span', '', 'Meta do mês: ' + R$(ranking.totalMes) + ' de ' + R$(ranking.meta)), el('b', '', Math.round(pct) + '%'));
+      const tr = el('div', 'rk-trilho'); const f = el('div', 'rk-fill' + (pct >= 100 ? ' batida' : '')); f.style.width = pct + '%'; tr.appendChild(f);
+      meta.append(t, tr);
+    }
+    // sua posição
+    const eu = lista.find(x => x.voce), voce = $('rk-voce'); voce.innerHTML = '';
+    voce.classList.toggle('lider', !!(eu && eu.pos === 1));
+    if (eu) voce.textContent = eu.pos === 1 ? 'Você está em 1º lugar!' : 'Você está em ' + eu.pos + 'º lugar' + (ehVenda ? ' · faltam ' + R$(lista[eu.pos - 2].faturamento - eu.faturamento + 0.01) + ' para subir' : '');
+    else voce.textContent = ehVenda ? 'Você ainda não vendeu este mês.' : 'Você ainda não tem presença registrada.';
+    // top 5 (+ você, se estiver fora)
+    const ol = $('rk-lista'); ol.innerHTML = '';
+    const mostrar = lista.slice(0, 5); if (eu && eu.pos > 5) mostrar.push(eu);
+    if (!lista.length) ol.appendChild(el('li', 'vazio-li', ehVenda ? 'Nenhuma venda este mês ainda.' : 'Nenhuma presença registrada ainda.'));
+    mostrar.forEach(g => {
+      const li = el('li', (g.voce ? 'eu ' : '') + (g.pos <= 3 ? 'top' + g.pos : ''));
+      const esq = el('div', 'pessoa'); esq.append(el('span', 'rk-pos', g.pos + 'º'), avatar(g.nome, g.foto, 'sm'));
+      const nm = el('div', 'rk-nome'); nm.append(el('b', '', g.nome.split(' ').slice(0, 2).join(' ') + (g.voce ? ' (você)' : '')), el('span', 'nota', detalhe(g)));
+      esq.appendChild(nm);
+      li.append(esq, el('b', 'rk-val', valor(g))); ol.appendChild(li);
+    });
+  }
+
+  /* ---------- Eventos internos e chamada (Presidência e Gestão de Pessoas) ---------- */
+  let eventos = [], eventoAtual = null, chamada = [], chamadaOriginal = {};
+  async function carregarEventos() {
+    if (!podeGerir()) return;
+    $('ev-vazio').hidden = false; $('ev-vazio').textContent = 'Carregando eventos…'; $('ev-lista').innerHTML = '';
+    try { eventos = (await api('evListar')).eventos; renderEventos(); }
+    catch (e) { if (!e.sessao) $('ev-vazio').textContent = e.message; }
+  }
+  $('ev-atualizar').addEventListener('click', carregarEventos);
+  function renderEventos() {
+    const box = $('ev-lista'); box.innerHTML = '';
+    eventos.forEach(ev => {
+      const c = el('article', 'evento');
+      const dt = el('div', 'ev-data'); const [a, m, d] = ev.data.split('-');
+      dt.append(el('b', '', d), el('span', '', MESES_C[Number(m) - 1]), el('small', '', a));
+      const info = el('div', 'ev-info');
+      info.append(el('h3', '', ev.nome), el('span', 'nota', [ev.local, ev.descricao].filter(Boolean).join(' · ') || 'Sem local definido'));
+      const cont = el('div', 'ev-cont');
+      [['st-Aprovado', ev.presentes, 'presente', 'presentes'], ['st-Recusado', ev.faltas, 'falta', 'faltas'], ['st-Pendente', ev.justificadas, 'justificada', 'justificadas']]
+        .forEach(([k, v, um, varios]) => cont.appendChild(el('span', 'pilula ' + k, v + ' ' + (v === 1 ? um : varios))));
+      info.appendChild(cont);
+      const ac = el('div', 'ev-acoes');
+      const bch = el('button', 'btn peq', 'Lista de presença'); bch.type = 'button'; bch.addEventListener('click', () => abrirChamada(ev));
+      const bed = el('button', 'btn sec peq', 'Editar'); bed.type = 'button'; bed.addEventListener('click', () => abrirEvento(ev));
+      const bap = el('button', 'btn-excluir', 'Apagar'); bap.type = 'button';
+      bap.addEventListener('click', () => confirmarEExecutar(bap, 'Apagar evento e presenças', async () => { await api('evApagar', { id: ev.id }); await carregarEventos(); carregarDash(); }, $('ev-erro')));
+      ac.append(bch, bed, bap);
+      c.append(dt, info, ac); box.appendChild(c);
+    });
+    $('ev-vazio').hidden = eventos.length > 0;
+    $('ev-vazio').textContent = 'Nenhum evento interno ainda. Clique em "+ Novo evento" para criar o primeiro.';
+  }
+  function abrirEvento(ev) {
+    eventoAtual = ev || null;
+    $('ev-titulo').textContent = ev ? 'Editar evento' : 'Novo evento';
+    $('ev-nome').value = ev ? ev.nome : ''; $('ev-data').value = ev ? ev.data : new Date().toISOString().slice(0, 10);
+    $('ev-local').value = ev ? ev.local : ''; $('ev-desc').value = ev ? ev.descricao : '';
+    $('ev-form-erro').hidden = true; $('dlg-evento').showModal(); $('ev-nome').focus();
+  }
+  $('ev-novo').addEventListener('click', () => abrirEvento(null));
+  $('ev-fechar').addEventListener('click', () => $('dlg-evento').close());
+  $('f-evento').addEventListener('submit', async e => {
+    e.preventDefault();
+    const box = $('ev-form-erro'), erro = t => { box.textContent = t; box.hidden = false; };
+    if (!$('ev-nome').value.trim()) return erro('Informe o nome do evento.');
+    if (!$('ev-data').value) return erro('Informe a data do evento.');
+    const b = $('ev-salvar'); b.disabled = true; b.textContent = 'Salvando…';
+    try {
+      await api('evSalvar', { id: eventoAtual ? eventoAtual.id : '', nome: $('ev-nome').value, data: $('ev-data').value, local: $('ev-local').value, descricao: $('ev-desc').value });
+      $('dlg-evento').close(); await carregarEventos();
+    } catch (err) { if (!err.sessao) erro(err.message); }
+    finally { b.disabled = false; b.textContent = 'Salvar evento'; }
+  });
+
+  // Lista de presença: um botão por situação; clicar de novo na mesma limpa a marcação
+  const SITS = [['Presente', 'presente'], ['Faltou', 'faltou'], ['Justificou', 'justificou']];
+  async function abrirChamada(ev) {
+    eventoAtual = ev; chamada = []; $('ch-lista').innerHTML = ''; $('ch-erro').hidden = true; $('ch-busca').value = '';
+    $('ch-titulo').textContent = ev.nome; $('ch-sub').textContent = API.dataBR(ev.data) + (ev.local ? ' · ' + ev.local : '');
+    $('ch-contagem').textContent = 'Carregando membros…';
+    $('dlg-chamada').showModal();
+    try {
+      const r = await api('evPresencas', { id: ev.id });
+      chamada = r.membros; chamadaOriginal = {}; chamada.forEach(m => { chamadaOriginal[m.email] = m.situacao; });
+      renderChamada();
+    } catch (e) { if (!e.sessao) { $('ch-erro').textContent = e.message; $('ch-erro').hidden = false; } }
+  }
+  function renderChamada() {
+    const q = $('ch-busca').value.trim().toLowerCase(), box = $('ch-lista'); box.innerHTML = '';
+    chamada.filter(m => !q || (m.nome + ' ' + m.papel).toLowerCase().includes(q)).forEach(m => {
+      const row = el('div', 'ch-linha');
+      const p = el('div', 'pessoa'); p.appendChild(avatar(m.nome, m.foto, 'sm'));
+      const nm = el('div'); nm.append(el('b', '', m.nome), el('span', 'nota', ' ' + m.papel)); p.appendChild(nm);
+      const grupo = el('div', 'ch-sits'); grupo.setAttribute('role', 'group'); grupo.setAttribute('aria-label', 'Situação de ' + m.nome);
+      SITS.forEach(([s, c]) => {
+        const b = el('button', 'sit ' + c, s); b.type = 'button'; b.setAttribute('aria-pressed', String(m.situacao === s));
+        b.addEventListener('click', () => { m.situacao = m.situacao === s ? '' : s; renderChamada(); });
+        grupo.appendChild(b);
+      });
+      row.append(p, grupo); box.appendChild(row);
+    });
+    const n = s => chamada.filter(m => m.situacao === s).length, sem = chamada.filter(m => !m.situacao).length;
+    const pl = (v, um, varios) => v + ' ' + (v === 1 ? um : varios);
+    $('ch-contagem').textContent = pl(n('Presente'), 'presente', 'presentes') + ' · ' + pl(n('Faltou'), 'falta', 'faltas') + ' · ' + pl(n('Justificou'), 'justificada', 'justificadas') + ' · ' + sem + ' sem registro';
+    const mudou = chamada.filter(m => (chamadaOriginal[m.email] || '') !== (m.situacao || '')).length;
+    $('ch-pendente').textContent = mudou ? (mudou === 1 ? '1 alteração não salva' : mudou + ' alterações não salvas') : 'Tudo salvo';
+  }
+  $('ch-busca').addEventListener('input', renderChamada);
+  $('ch-todos').addEventListener('click', () => { chamada.forEach(m => { if (!m.situacao) m.situacao = 'Presente'; }); renderChamada(); });
+  $('ch-fechar').addEventListener('click', () => $('dlg-chamada').close());
+  $('ch-salvar').addEventListener('click', async () => {
+    const marcacoes = chamada.filter(m => (chamadaOriginal[m.email] || '') !== (m.situacao || '')).map(m => ({ email: m.email, situacao: m.situacao || '' }));
+    if (!marcacoes.length) { $('dlg-chamada').close(); return; }
+    const b = $('ch-salvar'); b.disabled = true; b.textContent = 'Salvando…'; $('ch-erro').hidden = true;
+    try {
+      await api('evMarcar', { id: eventoAtual.id, marcacoes });
+      $('dlg-chamada').close(); await carregarEventos(); carregarDash();
+    } catch (err) { if (!err.sessao) { $('ch-erro').textContent = err.message; $('ch-erro').hidden = false; } }
+    finally { b.disabled = false; b.textContent = 'Salvar presenças'; }
+  });
+
+  /* ---------- Itens (lista usada por vendas, compras e estoque) ---------- */
+  let itens = [], formasPag = ['Pix', 'Dinheiro', 'Cartão', 'Outro'], itemAtual = null, carregandoItens = null;
+  function carregarItens() {
+    if (carregandoItens) return carregandoItens;
+    carregandoItens = (async () => {
+      try {
+        const r = await api('itListar'); itens = r.itens; formasPag = r.formas || formasPag;
+        preencherSelectsItens(); renderEstoque();
+      } catch (e) { if (!e.sessao) { $('it-vazio').hidden = false; $('it-vazio').textContent = e.message; } }
+      finally { carregandoItens = null; }
+    })();
+    return carregandoItens;
+  }
+  function preencherSelectsItens() {
+    const sv = $('vd-item'), vVal = sv.value; sv.innerHTML = '';
+    const ativos = itens.filter(i => i.ativo);
+    const op0 = el('option', '', ativos.length ? 'Escolha o item…' : 'Nenhum item cadastrado ainda'); op0.value = ''; sv.appendChild(op0);
+    ativos.forEach(i => { const o = el('option', '', i.nome + ' · ' + R$(i.preco) + (i.estoque > 0 ? ' · ' + i.estoque + ' em estoque' : ' · sem estoque')); o.value = i.id; o.disabled = i.estoque <= 0; sv.appendChild(o); });
+    sv.value = ativos.some(i => i.id === vVal) ? vVal : '';
+    const pg = $('vd-pag'); if (!pg.options.length) formasPag.forEach(f => { const o = el('option', '', f); o.value = f; pg.appendChild(o); });
+    const sc = $('cp-item'), cVal = sc.value; sc.innerHTML = '';
+    const oc = el('option', '', itens.length ? 'Escolha o item…' : 'Cadastre o item no Estoque primeiro'); oc.value = ''; sc.appendChild(oc);
+    itens.forEach(i => { const o = el('option', '', i.nome + (i.ativo ? '' : ' (desativado)') + ' · ' + i.estoque + ' em estoque'); o.value = i.id; sc.appendChild(o); });
+    sc.value = itens.some(i => i.id === cVal) ? cVal : '';
+    atualizarVenda();
+  }
+
+  /* ---------- Vendas ---------- */
+  function atualizarVenda() {
+    const it = itens.find(i => i.id === $('vd-item').value), q = Math.max(0, Math.floor(Number($('vd-qtd').value) || 0));
+    $('vd-item-dica').textContent = it ? (it.estoque + ' em estoque · preço sugerido ' + R$(it.preco)) : '';
+    const preco = $('vd-preco').value.trim() ? lerValor($('vd-preco').value) : (it ? it.preco : 0);
+    $('vd-total').textContent = R$((preco || 0) * q);
+  }
+  $('vd-item').addEventListener('change', () => { const it = itens.find(i => i.id === $('vd-item').value); $('vd-preco').value = it ? it.preco.toFixed(2).replace('.', ',') : ''; atualizarVenda(); });
+  ['vd-qtd', 'vd-preco'].forEach(id => $(id).addEventListener('input', atualizarVenda));
+  $('f-venda').addEventListener('submit', async e => {
+    e.preventDefault();
+    const box = $('vd-aviso'), msg = (c, t) => { box.className = 'aviso inteiro ' + c; box.textContent = t; box.hidden = false; };
+    const it = itens.find(i => i.id === $('vd-item').value), q = Math.floor(Number($('vd-qtd').value) || 0);
+    box.hidden = true;
+    if (!it) return msg('erro', 'Escolha o item vendido.');
+    if (!(q > 0)) return msg('erro', 'Informe a quantidade.');
+    if (q > it.estoque) return msg('erro', 'Só há ' + it.estoque + ' unidade(s) de ' + it.nome + ' em estoque.');
+    const preco = $('vd-preco').value.trim() ? lerValor($('vd-preco').value) : it.preco;
+    if (!(preco >= 0)) return msg('erro', 'Confira o preço: use números, por exemplo 25,00.');
+    const b = $('vd-enviar'); b.disabled = true; b.textContent = 'Registrando…';
+    try {
+      const r = await api('vdRegistrar', { itemId: it.id, qtd: q, preco, pagamento: $('vd-pag').value, obs: $('vd-obs').value });
+      msg('info', 'Venda ' + r.id + ' registrada: ' + R$(r.total) + '.');
+      $('vd-qtd').value = 1; $('vd-obs').value = '';
+      await carregarItens(); carregarVendas(); carregarDash();
+    } catch (err) { if (!err.sessao) msg('erro', err.message); }
+    finally { b.disabled = false; b.textContent = 'Registrar venda'; }
+  });
+  async function carregarVendas() {
+    const tb = $('vd-linhas'); $('vd-vazio').hidden = false; $('vd-vazio').textContent = 'Carregando…'; tb.innerHTML = '';
+    try {
+      const r = await api('vdListar');
+      document.querySelectorAll('#painel-vendas-th, [data-painel="vendas"] .so-gestor').forEach(x => x.hidden = !r.podeGerir);
+      $('vd-lista-titulo').textContent = r.podeGerir ? 'Todas as vendas' : 'Minhas vendas';
+      r.vendas.forEach(v => {
+        const tr = el('tr', v.status === 'Cancelada' ? 'cancelada' : '');
+        const td = (t, c) => { const d = el('td', c, t); tr.appendChild(d); return d; };
+        td(v.id, 'mono'); td(API.dataBR(v.data)); td(v.item); td(String(v.qtd), 'num'); td(R$(v.total), 'num');
+        if (r.podeGerir) td(R$(v.lucro), 'num');
+        td(v.pagamento); if (r.podeGerir) td(v.por);
+        const ac = el('td', 'acoes-linha');
+        if (v.status === 'Cancelada') ac.appendChild(el('span', 'pilula st-Recusado', 'Cancelada'));
+        else if (r.podeGerir) {
+          const x = el('button', 'btn-excluir', 'Cancelar'); x.type = 'button'; x.title = 'Cancelar a venda e devolver ao estoque';
+          x.addEventListener('click', () => confirmarEExecutar(x, 'Confirmar cancelamento', async () => { await api('vdCancelar', { id: v.id }); await carregarItens(); carregarVendas(); }, $('vd-erro')));
+          ac.appendChild(x);
+        }
+        tr.appendChild(ac); tb.appendChild(tr);
+      });
+      $('vd-vazio').hidden = r.vendas.length > 0; $('vd-vazio').textContent = 'Nenhuma venda registrada ainda.';
+    } catch (e) { if (!e.sessao) $('vd-vazio').textContent = e.message; }
+  }
+  $('vd-atualizar').addEventListener('click', () => { carregarItens(); carregarVendas(); });
+
+  // Botões que pedem um segundo clique para confirmar
+  async function confirmarEExecutar(btn, textoConfirmar, acao, caixaErro) {
+    if (!btn.dataset.confirmar) {
+      const orig = btn.textContent; btn.dataset.confirmar = '1'; btn.textContent = textoConfirmar; btn.classList.add('confirmar');
+      setTimeout(() => { if (btn.isConnected && btn.dataset.confirmar) { delete btn.dataset.confirmar; btn.textContent = orig; btn.classList.remove('confirmar'); } }, 5000);
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Salvando…'; caixaErro.hidden = true;
+    try { await acao(); } catch (err) { if (!err.sessao) { caixaErro.textContent = err.message; caixaErro.hidden = false; } btn.disabled = false; }
+  }
+
+  /* ---------- Estoque ---------- */
+  function renderEstoque() {
+    if (!podeAprovar()) return;
+    const res = $('it-resumo'); res.innerHTML = '';
+    const ativos = itens.filter(i => i.ativo), baixos = ativos.filter(i => i.estoque <= i.minimo);
+    [['Itens à venda', ativos.length, ''], ['Unidades em estoque', ativos.reduce((a, i) => a + i.estoque, 0), ''],
+     ['Valor de venda do estoque', R$(ativos.reduce((a, i) => a + i.estoque * i.preco, 0)), ''], ['Precisam repor', baixos.length, baixos.length ? 'alerta' : '']]
+      .forEach(([r, v, c]) => { const d = el('div', 'mini ' + c); d.append(el('span', 'rot', r), el('span', 'qtd', String(v))); res.appendChild(d); });
+    const q = $('it-busca').value.trim().toLowerCase(), tb = $('it-linhas'); tb.innerHTML = '';
+    const lista = itens.filter(i => !q || (i.nome + ' ' + i.categoria).toLowerCase().includes(q));
+    lista.forEach(i => {
+      const tr = el('tr', i.ativo ? '' : 'cancelada'); tr.tabIndex = 0;
+      const td = (t, c) => { const d = el('td', c, t); tr.appendChild(d); return d; };
+      const n = td(''); n.appendChild(el('b', '', i.nome)); n.appendChild(el('div', 'nota mono', i.id));
+      td(i.categoria || '—'); td(R$(i.preco), 'num'); td(R$(i.custo), 'num');
+      const m = td(R$(i.preco - i.custo), 'num'); if (i.preco - i.custo < 0) m.classList.add('neg');
+      td(String(i.estoque), 'num');
+      const st = el('td');
+      st.appendChild(!i.ativo ? el('span', 'pilula papel-Membro', 'Desativado') : i.estoque <= i.minimo ? el('span', 'pilula st-Recusado', 'Repor') : el('span', 'pilula st-Aprovado', 'OK'));
+      tr.appendChild(st);
+      tr.addEventListener('click', () => abrirItem(i)); tr.addEventListener('keydown', e => { if (e.key === 'Enter') abrirItem(i); });
+      tb.appendChild(tr);
+    });
+    $('it-vazio').hidden = lista.length > 0;
+    $('it-vazio').textContent = itens.length ? 'Nenhum item com essa busca.' : 'Nenhum item cadastrado. Clique em "+ Novo item" para começar.';
+    const dl = $('it-cats'); dl.innerHTML = '';
+    [...new Set(itens.map(i => i.categoria).filter(Boolean))].forEach(c => { const o = el('option'); o.value = c; dl.appendChild(o); });
+  }
+  $('it-busca').addEventListener('input', renderEstoque);
+  $('it-atualizar').addEventListener('click', carregarItens);
+  const moeda = v => (Number(v) || 0).toFixed(2).replace('.', ',');
+  function margemItem() { $('it-margem').textContent = R$((lerValor($('it-preco').value) || 0) - (lerValor($('it-custo').value) || 0)); }
+  ['it-preco', 'it-custo'].forEach(id => $(id).addEventListener('input', margemItem));
+  function abrirItem(i) {
+    itemAtual = i || null;
+    $('it-titulo').textContent = i ? 'Editar item' : 'Novo item';
+    $('it-nome').value = i ? i.nome : ''; $('it-cat').value = i ? i.categoria : '';
+    $('it-preco').value = i ? moeda(i.preco) : ''; $('it-custo').value = i ? moeda(i.custo) : '';
+    $('it-estoque').value = i ? '' : '0'; $('it-estoque').placeholder = i ? String(i.estoque) : '0';
+    $('it-estoque-rot').textContent = i ? 'Corrigir estoque' : 'Estoque inicial';
+    $('it-estoque-dica').textContent = i ? 'Hoje: ' + i.estoque + '. Só preencha para corrigir uma contagem. Entradas normais vêm de Compras.' : 'Quantas unidades vocês já têm.';
+    $('it-min').value = i ? i.minimo : 0; $('it-ativo').value = !i || i.ativo ? 'sim' : 'nao';
+    $('it-erro').hidden = true; margemItem();
+    $('dlg-item').showModal(); $('it-nome').focus();
+  }
+  $('it-novo').addEventListener('click', () => abrirItem(null));
+  $('it-fechar').addEventListener('click', () => $('dlg-item').close());
+  $('f-item').addEventListener('submit', async e => {
+    e.preventDefault();
+    const box = $('it-erro'), erro = t => { box.textContent = t; box.hidden = false; };
+    box.hidden = true;
+    const nome = $('it-nome').value.trim(), preco = lerValor($('it-preco').value), custo = lerValor($('it-custo').value || '0');
+    if (!nome) return erro('Informe o nome do item.');
+    if (!(preco >= 0) || $('it-preco').value.trim() === '') return erro('Informe o preço de venda, por exemplo 50,00.');
+    if (!(custo >= 0)) return erro('Confira o custo: use números, por exemplo 20,00.');
+    const est = $('it-estoque').value.trim();
+    if (est !== '' && !(Number(est) >= 0)) return erro('O estoque precisa ser um número inteiro, 0 ou mais.');
+    const b = $('it-salvar'); b.disabled = true; b.textContent = 'Salvando…';
+    try {
+      await api('itSalvar', { id: itemAtual ? itemAtual.id : '', nome, categoria: $('it-cat').value.trim(), preco, custo,
+        estoque: est === '' ? null : Number(est), minimo: Number($('it-min').value) || 0, ativo: $('it-ativo').value === 'sim' });
+      $('dlg-item').close(); await carregarItens();
+    } catch (err) { if (!err.sessao) erro(err.message); }
+    finally { b.disabled = false; b.textContent = 'Salvar item'; }
+  });
+
+  /* ---------- Compras ---------- */
+  function atualizarCompra() {
+    const q = Math.max(0, Math.floor(Number($('cp-qtd').value) || 0));
+    $('cp-total').textContent = R$((lerValor($('cp-custo').value) || 0) * q);
+  }
+  $('cp-item').addEventListener('change', () => { const it = itens.find(i => i.id === $('cp-item').value); if (it && it.custo != null) $('cp-custo').value = moeda(it.custo); atualizarCompra(); });
+  ['cp-qtd', 'cp-custo'].forEach(id => $(id).addEventListener('input', atualizarCompra));
+  $('f-compra').addEventListener('submit', async e => {
+    e.preventDefault();
+    const box = $('cp-aviso'), msg = (c, t) => { box.className = 'aviso inteiro ' + c; box.textContent = t; box.hidden = false; };
+    box.hidden = true;
+    const itemId = $('cp-item').value, q = Math.floor(Number($('cp-qtd').value) || 0), custo = lerValor($('cp-custo').value);
+    const status = (document.querySelector('input[name="cp-status"]:checked') || {}).value || 'Prevista';
+    if (!itemId) return msg('erro', 'Escolha o item comprado.');
+    if (!(q > 0)) return msg('erro', 'Informe a quantidade.');
+    if (!(custo >= 0) || !$('cp-custo').value.trim()) return msg('erro', 'Informe o custo unitário, por exemplo 18,50.');
+    const b = $('cp-enviar'); b.disabled = true; b.textContent = 'Registrando…';
+    try {
+      const r = await api('cpRegistrar', { itemId, qtd: q, custo, fornecedor: $('cp-forn').value, data: $('cp-data').value, status, obs: $('cp-obs').value });
+      msg('info', 'Compra ' + r.id + (status === 'Recebida' ? ' registrada e somada ao estoque.' : ' registrada como prevista. Marque como recebida quando chegar.'));
+      $('cp-qtd').value = 1; $('cp-obs').value = ''; $('cp-forn').value = '';
+      await carregarItens(); carregarCompras();
+    } catch (err) { if (!err.sessao) msg('erro', err.message); }
+    finally { b.disabled = false; b.textContent = 'Registrar compra'; }
+  });
+  async function carregarCompras() {
+    if (!podeAprovar()) return;
+    $('cp-data').value = $('cp-data').value || new Date().toISOString().slice(0, 10);
+    const tb = $('cp-linhas'); $('cp-vazio').hidden = false; $('cp-vazio').textContent = 'Carregando…'; tb.innerHTML = '';
+    try {
+      const r = await api('cpListar');
+      r.compras.forEach(c => {
+        const tr = el('tr', c.status === 'Cancelada' ? 'cancelada' : '');
+        const td = (t, k) => { const d = el('td', k, t); tr.appendChild(d); return d; };
+        td(c.id, 'mono'); td(API.dataBR(c.data)); td(c.item); td(String(c.qtd), 'num'); td(R$(c.total), 'num'); td(c.fornecedor || '—');
+        const st = el('td'); st.appendChild(el('span', 'pilula ' + (c.status === 'Recebida' ? 'st-Aprovado' : c.status === 'Prevista' ? 'st-Pendente' : 'st-Recusado'), c.status)); tr.appendChild(st);
+        const ac = el('td', 'acoes-linha');
+        if (c.status === 'Prevista') {
+          const ok = el('button', 'btn-acao', 'Chegou'); ok.type = 'button'; ok.title = 'Marcar como recebida e somar ao estoque';
+          ok.addEventListener('click', () => confirmarEExecutar(ok, 'Confirmar entrada', async () => { await api('cpAtualizar', { id: c.id, status: 'Recebida' }); await carregarItens(); carregarCompras(); }, $('cp-erro')));
+          const x = el('button', 'btn-excluir', 'Cancelar'); x.type = 'button';
+          x.addEventListener('click', () => confirmarEExecutar(x, 'Confirmar', async () => { await api('cpAtualizar', { id: c.id, status: 'Cancelada' }); carregarCompras(); }, $('cp-erro')));
+          ac.append(ok, x);
+        }
+        tr.appendChild(ac); tb.appendChild(tr);
+      });
+      $('cp-vazio').hidden = r.compras.length > 0; $('cp-vazio').textContent = 'Nenhuma compra registrada ainda.';
+    } catch (e) { if (!e.sessao) $('cp-vazio').textContent = e.message; }
+  }
+  $('cp-atualizar').addEventListener('click', () => { carregarItens(); carregarCompras(); });
 
   /* ---------- Conta ---------- */
   $('f-senha').addEventListener('submit', async e => {
