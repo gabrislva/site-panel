@@ -595,3 +595,19 @@ dialog.largo-dlg { width: min(760px, calc(100vw - 32px)); }
 .dash-grade { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
 @media (max-width: 900px) { .dash-grade { grid-template-columns: 1fr; } }
 #avisos-mais { background: none; border: 0; padding: 4px 0; font: 700 14px var(--font-body); color: var(--red-dark); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+/* rankings separados */
+.rankings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 900px) { .rankings { grid-template-columns: 1fr; } }
+.rankings .ranking { align-content: start; }
+
+/* menu do portal no celular: botão que abre a lista */
+.lado-toggle { display: none !important; }
+@media (max-width: 900px) {
+  .lado { grid-auto-flow: row; grid-auto-columns: auto; overflow: visible; padding: 8px; gap: 4px; }
+  .lado-toggle { display: flex !important; width: 100%; font-weight: 700; }
+  .lado-toggle b { margin-left: auto; color: var(--red-dark); font-weight: 700; }
+  .lado > button:not(.lado-toggle) { display: none; }
+  .lado.aberto > button:not(.lado-toggle):not([hidden]) { display: flex; }
+  .lado.aberto .lado-toggle { border-bottom: 1.5px solid var(--ink); border-radius: 12px 12px 0 0; }
+}

@@ -128,7 +128,7 @@ As mensagens chegam no e-mail definido na aba **Config** e ficam registradas na 
 
 ## Área do membro
 
-- **Início:** mural de avisos no topo (os 3 mais recentes, com *Ver todos*), sua contagem de presenças e faltas, panorama financeiro, ranking e atalhos.
+- **Início:** mural de avisos no topo (os 3 mais recentes, com *Ver todos*), sua contagem de presenças e faltas, panorama financeiro (menos para o cargo *Membro*), rankings de vendas e de presença e atalhos.
 - **Pedir reembolso:** o nome e o e-mail vão automaticamente; as categorias e os projetos vêm da aba *Categorias e projetos*.
 - **Meus pedidos:** status e comentários de cada pedido.
 - **Gerenciar reembolsos:** só para Financeiro e Presidência. Tem filtros, detalhes, histórico e exportação em CSV.
@@ -144,7 +144,7 @@ Ficam na planilha do Portal, nas abas **Itens**, **Vendas** e **Compras**, criad
 
 | Tela | Quem usa | O que faz |
 |---|---|---|
-| **Panorama financeiro** (no Início) | Todos | Lucro previsto, previsão de despesas, saldo previsto e gráfico de 6 meses |
+| **Panorama financeiro** (no Início) | Todos os cargos, menos *Membro* | Lucro previsto, previsão de despesas, saldo previsto e vendas do mês |
 | **Vendas** | Todos | Registrar venda; o estoque baixa sozinho. Cada um vê as próprias vendas |
 | **Estoque** | Financeiro e Presidência | Cadastrar e editar itens: preço, custo, quantidade e estoque mínimo |
 | **Compras** | Financeiro e Presidência | Registrar compra prevista ou recebida e marcar quando chegou |
@@ -164,13 +164,13 @@ Ficam na planilha do Portal, nas abas **Itens**, **Vendas** e **Compras**, criad
 - Itens não são apagados: use *Desativado* para tirá-los da lista de venda sem perder o histórico.
 - Para corrigir uma contagem de estoque, edite o item e preencha **Corrigir estoque**.
 
-### Ranking (gamificação)
+### Rankings (gamificação)
 
-No Início, um cartão compacto com duas abas:
+No Início, dois cartões lado a lado, visíveis para todos:
 
-- **Vendas:** quem mais vendeu no mês (em valor; desconsidera canceladas), com a barra da **meta da equipe**. A meta fica em *Meta de vendas do mês (R$)*, na aba **Config**. Com 0, a barra some.
-- **Presença:** quem mais esteve presente nos eventos internos, com a taxa de presença.
-- Mostra o top 5 e a sua posição (se você estiver fora do top 5, sua linha aparece no fim). Os e-mails não aparecem.
+- **Ranking de vendas:** quem mais vendeu no mês (em valor; desconsidera canceladas), com a barra da **meta da equipe**. A meta fica em *Meta de vendas do mês (R$)*, na aba **Config**. Com 0, a barra some.
+- **Ranking de presença:** quem mais esteve presente nos eventos internos, com a taxa de presença.
+- Cada um mostra o top 5 e a sua posição (se você estiver fora do top 5, sua linha aparece no fim). Os e-mails não aparecem.
 
 ## Eventos internos e presença (Presidência e Gestão de Pessoas)
 
