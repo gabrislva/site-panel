@@ -1,7 +1,7 @@
 /* Partes comuns do site: topo com menu, rodapé, fotos e páginas montadas a partir de conteudo.js */
 (function () {
   const CFG = window.CONFIG || {};
-  const C = window.CONTEUDO || {};
+  const C0 = window.CONTEUDO || {};
   const pagina = document.body.dataset.pagina || '';
 
   const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
@@ -12,6 +12,7 @@
     ['sobre', 'sobre.html', 'Sobre nós'],
     ['esportes', 'esportes.html', 'Esportes'],
     ['eventos', 'eventos.html', 'Eventos'],
+    ['parcerias', 'parcerias.html', 'Parcerias'],
     ['contato', 'contato.html', 'Contato']
   ];
   const topo = document.getElementById('topo');
@@ -48,7 +49,7 @@
     const esq = el('div'); esq.style.display = 'grid'; esq.style.gap = '4px';
     esq.append(el('b', '', CFG.NOME_ORGANIZACAO || ''), el('small', '', '© ' + new Date().getFullYear() + ' ' + (CFG.NOME_COMPLETO || CFG.NOME_ORGANIZACAO || '')));
     const redes = el('div', 'redes');
-    (C.redes || []).forEach(r => { if (!r.link) return; const a = el('a', '', r.nome); a.href = r.link; if (/^https?:/.test(r.link)) { a.target = '_blank'; a.rel = 'noopener'; } redes.appendChild(a); });
+    (C0.redes || []).forEach(r => { if (!r.link) return; const a = el('a', '', r.nome); a.href = r.link; if (/^https?:/.test(r.link)) { a.target = '_blank'; a.rel = 'noopener'; } redes.appendChild(a); });
     const m = el('a', '', 'Área do membro'); m.href = 'membros.html'; redes.appendChild(m);
     inn.append(esq, redes); rod.appendChild(inn);
   }
@@ -95,63 +96,145 @@
   const $ = id => document.getElementById(id);
   const set = (id, t) => { const e = $(id); if (e) e.textContent = t || ''; };
 
-  /* ---------- Páginas ---------- */
-  if (pagina === 'inicio' && C.inicio) {
-    const I = C.inicio;
-    set('h-chamada', I.chamada); set('h-titulo', I.titulo); set('h-texto', I.texto);
-    const b = $('h-botao'); if (I.botao && I.botao.texto) { b.textContent = I.botao.texto; b.href = I.botao.link || '#'; } else b.hidden = true;
-    $('h-foto').appendChild(foto(I.imagem, 'Foto de capa'));
-    const nums = $('numeros');
-    if (I.numeros && I.numeros.length) I.numeros.forEach(n => { const d = el('div', 'numero'); d.append(el('b', '', n.valor), el('span', '', n.rotulo)); nums.appendChild(d); });
-    else nums.hidden = true;
-    const lista = $('noticias');
-    const ns = (I.noticias || []).slice().sort((a, c) => String(c.data).localeCompare(String(a.data)));
-    if (ns.length) ns.forEach(n => lista.appendChild(card(n, { chip: dataBonita(n.data) })));
-    else emBreve(lista, 'Nenhuma novidade por enquanto', 'Volte em breve para ver as notícias.');
+  /* ---------- Conteúdo editado pelo painel (planilha) ----------
+     O site mostra primeiro o que está guardado no navegador e depois
+     atualiza com a planilha. Sem API ou se a planilha falhar, usa conteudo.js. */
+  function mesclar(base, P) {
+    const C = JSON.parse(JSON.stringify(base || {}));
+    const T = (P && P.textos) || {}, L = (P && P.colecoes) || {};
+    const ativo = n => L[n] && L[n].ativo, itens = n => (L[n] && L[n].itens) || [];
+    const pg = n => (C[n] = C[n] || {});
+    const txt = (n, campo, chave) => { if (T[chave]) pg(n)[campo] = T[chave]; };
+    ['chamada', 'titulo', 'texto', 'imagem'].forEach(k => txt('inicio', k, 'inicio.' + k));
+    if (T['inicio.botaoTexto']) pg('inicio').botao = { texto: T['inicio.botaoTexto'], link: T['inicio.botaoLink'] || (C.inicio.botao && C.inicio.botao.link) || 'sobre.html' };
+    ['sobre', 'eventos', 'esportes', 'parcerias'].forEach(n => { txt(n, 'titulo', n + '.titulo'); txt(n, 'texto', n + '.texto'); });
+    if (ativo('noticias')) pg('inicio').noticias = itens('noticias');
+    if (ativo('sobre')) {
+      pg('sobre').artigos = itens('sobre').filter(i => i.tipo !== 'Foto').map(i => ({ titulo: i.titulo, paragrafos: String(i.texto || '').split(/\n\s*\n|\n/).filter(x => x.trim()), imagem: i.imagem, legenda: i.legenda }));
+      C.sobre.galeria = itens('sobre').filter(i => i.tipo === 'Foto').map(i => ({ imagem: i.imagem, legenda: i.legenda }));
+    }
+    if (ativo('agenda')) pg('eventos').lista = itens('agenda');
+    if (ativo('treinos')) pg('esportes').modalidades = itens('treinos').map(i => ({ nome: i.modalidade, descricao: i.descricao, imagem: i.imagem, link: i.link, horario: i.horario, local: i.local }));
+    if (ativo('resultados')) pg('esportes').resultados = itens('resultados');
+    if (ativo('parcerias')) pg('parcerias').lista = itens('parcerias');
+    return C;
   }
 
-  if (pagina === 'sobre' && C.sobre) {
-    const S = C.sobre;
-    set('s-titulo', S.titulo); set('s-texto', S.texto);
-    const arts = $('artigos');
-    (S.artigos || []).forEach(a => {
-      const art = el('article', 'artigo');
-      const fig = el('figure', 'artigo-foto'); fig.appendChild(foto(a.imagem, a.legenda || a.titulo));
-      if (a.legenda) fig.appendChild(el('figcaption', '', a.legenda));
-      const t = el('div', 'artigo-txt'); t.appendChild(el('h2', '', a.titulo));
-      (a.paragrafos || []).forEach(p => t.appendChild(el('p', '', p)));
-      art.append(fig, t); arts.appendChild(art);
-    });
-    const gal = $('galeria');
-    if ((S.galeria || []).length) S.galeria.forEach(g => {
-      const f = el('figure');
-      const ft = foto(g.imagem, g.legenda);
-      if (g.imagem) { const a = el('a'); a.href = g.imagem; a.target = '_blank'; a.rel = 'noopener'; a.appendChild(ft); f.appendChild(a); } else f.appendChild(ft);
-      if (g.legenda) f.appendChild(el('figcaption', '', g.legenda));
-      gal.appendChild(f);
-    });
-    else $('sec-galeria').hidden = true;
+  function render(C) {
+    if (pagina === 'inicio' && C.inicio) {
+      const I = C.inicio;
+      set('h-chamada', I.chamada); set('h-titulo', I.titulo); set('h-texto', I.texto);
+      const b = $('h-botao'); if (I.botao && I.botao.texto) { b.hidden = false; b.textContent = I.botao.texto; b.href = I.botao.link || '#'; } else b.hidden = true;
+      const hf = $('h-foto'); hf.innerHTML = ''; hf.appendChild(foto(I.imagem, 'Foto de capa'));
+      const nums = $('numeros'); nums.innerHTML = '';
+      if (I.numeros && I.numeros.length) { nums.hidden = false; I.numeros.forEach(n => { const d = el('div', 'numero'); d.append(el('b', '', n.valor), el('span', '', n.rotulo)); nums.appendChild(d); }); }
+      else nums.hidden = true;
+      const lista = $('noticias'); lista.innerHTML = '';
+      const ns = (I.noticias || []).slice().sort((a, c) => String(c.data).localeCompare(String(a.data)));
+      if (ns.length) ns.forEach(n => lista.appendChild(card(n, { chip: dataBonita(n.data) })));
+      else emBreve(lista, 'Nenhuma novidade por enquanto', 'Volte em breve para ver as notícias.');
+    }
+
+    if (pagina === 'sobre' && C.sobre) {
+      const S = C.sobre;
+      set('s-titulo', S.titulo); set('s-texto', S.texto);
+      const arts = $('artigos'); arts.innerHTML = '';
+      (S.artigos || []).forEach(a => {
+        const art = el('article', 'artigo');
+        const fig = el('figure', 'artigo-foto'); fig.appendChild(foto(a.imagem, a.legenda || a.titulo));
+        if (a.legenda) fig.appendChild(el('figcaption', '', a.legenda));
+        const t = el('div', 'artigo-txt'); t.appendChild(el('h2', '', a.titulo || ''));
+        (a.paragrafos || []).forEach(p => t.appendChild(el('p', '', p)));
+        art.append(fig, t); arts.appendChild(art);
+      });
+      const gal = $('galeria'); gal.innerHTML = '';
+      $('sec-galeria').hidden = !(S.galeria || []).length;
+      (S.galeria || []).forEach(g => {
+        const f = el('figure');
+        const ft = foto(g.imagem, g.legenda);
+        if (g.imagem) { const a = el('a'); a.href = g.imagem; a.target = '_blank'; a.rel = 'noopener'; a.appendChild(ft); f.appendChild(a); } else f.appendChild(ft);
+        if (g.legenda) f.appendChild(el('figcaption', '', g.legenda));
+        gal.appendChild(f);
+      });
+    }
+
+    if (pagina === 'esportes' && C.esportes) {
+      const E = C.esportes;
+      set('p-titulo', E.titulo); set('p-texto', E.texto);
+      const l = $('lista'); l.innerHTML = ''; l.className = 'cards';
+      if ((E.modalidades || []).length) E.modalidades.forEach(m => l.appendChild(card(m, { chip: m.horario, sub: m.local })));
+      else { l.className = ''; emBreve(l, 'Em breve', 'Estamos preparando esta página. Enquanto isso, fale com a gente pelo Contato.'); }
+      const rs = E.resultados || [], box = $('resultados'); box.innerHTML = '';
+      $('sec-resultados').hidden = !rs.length;
+      rs.slice().sort((a, c) => String(c.data).localeCompare(String(a.data))).forEach(r => {
+        const it = el('article', 'resultado');
+        const med = el('div', 'res-medalha' + (/campe|1º|1o|ouro/i.test(r.resultado || '') ? ' ouro' : /2º|2o|vice|prata/i.test(r.resultado || '') ? ' prata' : /3º|3o|bronze/i.test(r.resultado || '') ? ' bronze' : ''));
+        med.textContent = r.resultado || '—';
+        const tx = el('div', 'res-txt');
+        tx.append(el('span', 'data-chip', [dataBonita(r.data), r.modalidade].filter(Boolean).join(' · ')), el('h3', '', r.campeonato));
+        if (r.descricao) tx.appendChild(el('p', '', r.descricao));
+        it.append(med, tx);
+        if (r.imagem) it.appendChild(foto(r.imagem, r.campeonato, 'res-foto'));
+        box.appendChild(it);
+      });
+    }
+
+    if (pagina === 'eventos' && C.eventos) {
+      const E = C.eventos;
+      set('p-titulo', E.titulo); set('p-texto', E.texto);
+      const hoje = new Date().toISOString().slice(0, 10);
+      const todos = (E.lista || []).slice().sort((a, c) => String(a.data).localeCompare(String(c.data)));
+      const prox = todos.filter(e => !e.data || String(e.data) >= hoje), pass = todos.filter(e => e.data && String(e.data) < hoje).reverse();
+      const l = $('lista'); l.innerHTML = ''; l.className = 'cards';
+      if (prox.length) prox.forEach(e => l.appendChild(card(e, { chip: dataBonita(e.data), sub: e.local })));
+      else { l.className = ''; emBreve(l, 'Em breve', 'A agenda de eventos vai aparecer aqui. Siga a gente nas redes para não perder nada.'); }
+      const p = $('passados'); p.innerHTML = ''; $('sec-passados').hidden = !pass.length;
+      pass.forEach(e => p.appendChild(card(e, { chip: dataBonita(e.data), sub: e.local })));
+    }
+
+    if (pagina === 'parcerias') {
+      const P = C.parcerias || {};
+      set('p-titulo', P.titulo || 'Parcerias');
+      set('p-texto', P.texto || 'Empresas e marcas que apoiam a gente e oferecem vantagens para os nossos membros.');
+      const l = $('lista'); l.innerHTML = ''; l.className = 'parcerias';
+      const ps = P.lista || [];
+      if (!ps.length) { l.className = ''; emBreve(l, 'Em breve', 'Nossas parcerias vão aparecer aqui. Quer ser parceiro? Fale com a gente pelo Contato.'); }
+      ps.forEach(x => {
+        const c = el(x.link ? 'a' : 'article', 'parceiro');
+        if (x.link) { c.href = x.link; if (/^https?:/.test(x.link)) { c.target = '_blank'; c.rel = 'noopener'; } }
+        const logo = el('div', 'parceiro-logo');
+        if (x.imagem) { const im = el('img'); im.src = x.imagem; im.alt = x.nome; im.loading = 'lazy'; logo.appendChild(im); }
+        else logo.appendChild(el('span', '', String(x.nome || '?').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase()));
+        const corpo = el('div', 'parceiro-corpo');
+        corpo.appendChild(el('h3', '', x.nome));
+        if (x.beneficios) { const bf = el('div', 'beneficio'); bf.append(el('span', 'eyebrow', 'Benefício'), el('p', '', x.beneficios)); corpo.appendChild(bf); }
+        if (x.link) corpo.appendChild(el('span', 'mais', 'Conhecer →'));
+        c.append(logo, corpo); l.appendChild(c);
+      });
+    }
   }
 
-  if (pagina === 'esportes' && C.esportes) {
-    const E = C.esportes;
-    set('p-titulo', E.titulo); set('p-texto', E.texto);
-    const l = $('lista');
-    if ((E.modalidades || []).length) E.modalidades.forEach(m => l.appendChild(card(m)));
-    else { l.className = ''; emBreve(l, 'Em breve', 'Estamos preparando esta página. Enquanto isso, fale com a gente pelo Contato.'); }
+  const DINAMICAS = ['inicio', 'sobre', 'esportes', 'eventos', 'parcerias'];
+  if (DINAMICAS.indexOf(pagina) >= 0) {
+    const CHAVE = 'site-publico-v1';
+    let guardado = null;
+    try { guardado = JSON.parse(localStorage.getItem(CHAVE) || 'null'); } catch (e) { }
+    const usaApi = window.API && API.configurado();
+    if (!usaApi) render(C0);
+    else {
+      if (guardado) render(mesclar(C0, guardado));
+      else document.body.classList.add('carregando');
+      API.post({ action: 'publico' }).then(P => {
+        const novo = { textos: P.textos, colecoes: P.colecoes };
+        try { localStorage.setItem(CHAVE, JSON.stringify(novo)); } catch (e) { }
+        if (!guardado || JSON.stringify(novo) !== JSON.stringify(guardado)) render(mesclar(C0, novo));
+      }).catch(() => { if (!guardado) render(C0); })
+        .finally(() => document.body.classList.remove('carregando'));
+    }
   }
 
-  if (pagina === 'eventos' && C.eventos) {
-    const E = C.eventos;
-    set('p-titulo', E.titulo); set('p-texto', E.texto);
-    const l = $('lista');
-    const ev = (E.lista || []).slice().sort((a, c) => String(a.data).localeCompare(String(c.data)));
-    if (ev.length) ev.forEach(e => l.appendChild(card(e, { chip: dataBonita(e.data), sub: e.local })));
-    else { l.className = ''; emBreve(l, 'Em breve', 'A agenda de eventos vai aparecer aqui. Siga a gente nas redes para não perder nada.'); }
-  }
-
-  if (pagina === 'contato' && C.contato) {
-    const K = C.contato;
+  if (pagina === 'contato' && C0.contato) {
+    const K = C0.contato;
     set('c-titulo', K.titulo); set('c-texto', K.texto);
     const sel = $('assunto');
     (K.assuntos || []).forEach(a => { const o = el('option', '', a); o.value = a; sel.appendChild(o); });

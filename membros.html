@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Mono:wght@500&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
-<link rel="stylesheet" href="assets/styles.css?v=7">
+<link rel="stylesheet" href="assets/styles.css?v=8">
 </head>
 <body data-pagina="membros">
 <div id="topo"></div>
@@ -44,6 +44,10 @@
     <button type="button" data-aba="compras" data-papeis="Financeiro,Presidência" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h12L22 7H6"/></svg>Compras</button>
     <button type="button" data-aba="aprovar" data-papeis="Financeiro,Presidência" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gerenciar reembolsos</button>
     <button type="button" data-aba="eventos" data-papeis="Presidência,Gestão de Pessoas" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M8.5 15l2.5 2.5 4.5-5"/></svg>Eventos internos</button>
+    <button type="button" data-aba="site-inicio" data-papeis="Presidência,Marketing" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="7" cy="6.5" r=".6"/></svg>Site: Início e Sobre</button>
+    <button type="button" data-aba="site-eventos" data-papeis="Presidência,Eventos" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-12 4 12M5.5 15.5h5"/><path d="M15 4l1.5 3 3 .5-2.2 2 .6 3-2.9-1.5L12 12.5l.6-3-2.2-2 3-.5z"/></svg>Site: Eventos</button>
+    <button type="button" data-aba="site-esportes" data-papeis="Presidência,Esportes" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>Site: Esportes</button>
+    <button type="button" data-aba="site-parcerias" data-papeis="Presidência,Comercial" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13l3 3 6-6"/><path d="M3 12l4-4 3 1 4-3 7 6-8 8-3-1z"/></svg>Site: Parcerias</button>
     <button type="button" data-aba="membros" data-papeis="Presidência,Gestão de Pessoas" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.2 2.6 3.6 5.5"/></svg>Membros</button>
     <button type="button" data-aba="conta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Minha conta</button>
     <button type="button" class="sair" id="b-sair"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h4v16h-4"/><path d="M10 8l-4 4 4 4M6 12h10"/></svg>Sair</button>
@@ -253,6 +257,12 @@
       </div>
     </section>
 
+    <!-- Conteúdo do site (cada página com seus cargos) -->
+    <section data-painel="site-inicio" hidden><div class="painel" id="cms-inicio"></div></section>
+    <section data-painel="site-eventos" hidden><div class="painel" id="cms-eventos"></div></section>
+    <section data-painel="site-esportes" hidden><div class="painel" id="cms-esportes"></div></section>
+    <section data-painel="site-parcerias" hidden><div class="painel" id="cms-parcerias"></div></section>
+
     <!-- Membros (Presidência e Gestão de Pessoas) -->
     <section data-painel="membros" hidden>
       <div class="painel">
@@ -331,6 +341,15 @@
   </form>
 </dialog>
 
+<dialog id="dlg-cms" aria-labelledby="cms-titulo">
+  <form class="det" id="f-cms" novalidate>
+    <header><h2 id="cms-titulo"></h2><button class="fechar" id="cms-fechar" type="button" aria-label="Fechar">×</button></header>
+    <div class="grade" id="cms-campos"></div>
+    <div id="cms-erro" class="aviso erro" hidden role="alert"></div>
+    <div class="acoes" style="justify-content:flex-end"><button class="btn" id="cms-salvar" type="submit">Salvar</button></div>
+  </form>
+</dialog>
+
 <dialog id="dlg-evento" aria-labelledby="ev-titulo">
   <form class="det" id="f-evento" novalidate>
     <header><h2 id="ev-titulo">Novo evento</h2><button class="fechar" id="ev-fechar" type="button" aria-label="Fechar">×</button></header>
@@ -399,10 +418,10 @@
 </dialog>
 
 <footer id="rodape"></footer>
-<script src="config.js?v=7"></script>
-<script src="conteudo.js?v=7"></script>
-<script src="assets/api.js?v=7"></script>
-<script src="assets/site.js?v=7"></script>
+<script src="config.js?v=8"></script>
+<script src="conteudo.js?v=8"></script>
+<script src="assets/api.js?v=8"></script>
+<script src="assets/site.js?v=8"></script>
 <script>
 (function () {
   const $ = id => document.getElementById(id);
@@ -476,7 +495,7 @@
   function rota() {
     if (!perfil) return;
     let aba = location.hash.slice(1) || 'inicio';
-    if (!document.querySelector('[data-painel="' + aba + '"]') || (aba === 'aprovar' && !podeAprovar()) || (aba === 'membros' && !podeGerir()) || ((aba === 'estoque' || aba === 'compras') && !podeAprovar()) || (aba === 'eventos' && !podeGerir())) aba = 'inicio';
+    if (!document.querySelector('[data-painel="' + aba + '"]') || (aba === 'aprovar' && !podeAprovar()) || (aba === 'membros' && !podeGerir()) || ((aba === 'estoque' || aba === 'compras') && !podeAprovar()) || (aba === 'eventos' && !podeGerir()) || (aba.indexOf('site-') === 0 && !podeSite(aba.slice(5)))) aba = 'inicio';
     document.querySelectorAll('[data-painel]').forEach(s => s.hidden = s.dataset.painel !== aba);
     document.querySelectorAll('.lado [data-aba]').forEach(b => b.setAttribute('aria-current', String(b.dataset.aba === aba)));
     const atual = document.querySelector('.lado [data-aba="' + aba + '"]'); $('lado-atual').textContent = atual ? atual.textContent.trim() : '';
@@ -489,6 +508,7 @@
     if (aba === 'estoque') carregarItens();
     if (aba === 'compras') { carregarItens(); carregarCompras(); }
     if (aba === 'eventos') carregarEventos();
+    if (aba.indexOf('site-') === 0) carregarCms(aba.slice(5));
     if (aba === 'meus') carregarMeus();
     if (aba === 'aprovar') carregarAprovacao();
   }
@@ -963,6 +983,199 @@
       li.append(esq, el('b', 'rk-val', valor(g))); ol.appendChild(li);
     });
   }
+
+
+  /* ---------- Conteúdo do site (Início/Sobre, Eventos, Esportes, Parcerias) ---------- */
+  const CMS_PAG = {
+    inicio: { papeis: [PRES, 'Marketing'], nome: 'Páginas Início e Sobre nós', ver: [['Ver Início', 'index.html'], ['Ver Sobre nós', 'sobre.html']],
+      textos: [['inicio.imagem', 'Foto de capa do Início', 'img'], ['inicio.chamada', 'Chamada (texto pequeno acima do título)'], ['inicio.titulo', 'Título do Início'],
+        ['inicio.texto', 'Texto de abertura do Início', 'area'], ['inicio.botaoTexto', 'Texto do botão'], ['inicio.botaoLink', 'Link do botão (ex.: sobre.html)'],
+        ['sobre.titulo', 'Título do Sobre nós'], ['sobre.texto', 'Texto de abertura do Sobre nós', 'area']],
+      colecoes: ['noticias', 'sobre'] },
+    eventos: { papeis: [PRES, 'Eventos'], nome: 'Página de eventos', ver: [['Ver página', 'eventos.html']],
+      textos: [['eventos.titulo', 'Título'], ['eventos.texto', 'Texto de abertura', 'area']], colecoes: ['agenda'] },
+    esportes: { papeis: [PRES, 'Esportes'], nome: 'Página de esportes', ver: [['Ver página', 'esportes.html']],
+      textos: [['esportes.titulo', 'Título'], ['esportes.texto', 'Texto de abertura', 'area']], colecoes: ['treinos', 'resultados'] },
+    parcerias: { papeis: [PRES, 'Comercial'], nome: 'Página de parcerias', ver: [['Ver página', 'parcerias.html']],
+      textos: [['parcerias.titulo', 'Título'], ['parcerias.texto', 'Texto de abertura', 'area']], colecoes: ['parcerias'] }
+  };
+  // [chave, rótulo, tipo, obrigatório, opções]
+  const CMS_COL = {
+    noticias: { nome: 'Notícias', um: 'notícia', campos: [['titulo', 'Título', 'txt', 1], ['data', 'Data', 'data'], ['resumo', 'Resumo', 'area'], ['imagem', 'Foto', 'img'], ['link', 'Link para saber mais (opcional)', 'url']],
+      linha: i => [i.titulo, API.dataBR(i.data)] },
+    sobre: { nome: 'Sobre nós: artigos e galeria', um: 'artigo ou foto', campos: [['tipo', 'Tipo', 'sel', 1, ['Artigo', 'Foto']], ['titulo', 'Título (artigo)', 'txt'], ['texto', 'Texto (artigo). Pule uma linha para criar outro parágrafo', 'area'], ['imagem', 'Foto', 'img'], ['legenda', 'Legenda da foto', 'txt'], ['ordem', 'Ordem (1 aparece primeiro)', 'num']],
+      linha: i => [i.tipo === 'Foto' ? (i.legenda || 'Foto da galeria') : i.titulo, (i.tipo === 'Foto' ? 'Galeria' : 'Artigo') + (i.ordem ? ' · ordem ' + i.ordem : '')] },
+    agenda: { nome: 'Eventos', um: 'evento', campos: [['nome', 'Nome do evento', 'txt', 1], ['data', 'Data', 'data', 1], ['local', 'Local', 'txt'], ['descricao', 'Descrição', 'area'], ['imagem', 'Foto', 'img'], ['link', 'Link de inscrição ou ingressos (opcional)', 'url']],
+      linha: i => [i.nome, API.dataBR(i.data) + (i.local ? ' · ' + i.local : '')] },
+    treinos: { nome: 'Treinos', um: 'treino', campos: [['modalidade', 'Modalidade', 'txt', 1], ['horario', 'Dias e horários (ex.: terças e quintas, 19h)', 'txt'], ['local', 'Local', 'txt'], ['descricao', 'Descrição', 'area'], ['imagem', 'Foto', 'img'], ['link', 'Link (ex.: grupo do time, opcional)', 'url'], ['ordem', 'Ordem (1 aparece primeiro)', 'num']],
+      linha: i => [i.modalidade, [i.horario, i.local].filter(Boolean).join(' · ')] },
+    resultados: { nome: 'Resultados de campeonatos', um: 'resultado', campos: [['campeonato', 'Campeonato', 'txt', 1], ['data', 'Data', 'data'], ['modalidade', 'Modalidade', 'txt'], ['resultado', 'Resultado (ex.: Campeão, 2º lugar)', 'txt'], ['descricao', 'Detalhes (placar, destaques)', 'area'], ['imagem', 'Foto', 'img']],
+      linha: i => [i.campeonato, [API.dataBR(i.data), i.modalidade, i.resultado].filter(Boolean).join(' · ')] },
+    parcerias: { nome: 'Parcerias', um: 'parceria', campos: [['nome', 'Nome do parceiro', 'txt', 1], ['beneficios', 'Benefícios para os membros', 'area'], ['imagem', 'Logo ou foto', 'img'], ['link', 'Site ou Instagram (opcional)', 'url'], ['ordem', 'Ordem (1 aparece primeiro)', 'num']],
+      linha: i => [i.nome, i.beneficios] }
+  };
+  const podeSite = pg => perfil && CMS_PAG[pg] && CMS_PAG[pg].papeis.indexOf(perfil.papel) >= 0;
+  const cmsDados = {};
+
+  function reduzirImagem(file, max) {
+    return new Promise((ok, falha) => {
+      if (!/^image\//.test(file.type)) return falha(new Error('Escolha um arquivo de imagem (JPG, PNG ou WEBP).'));
+      const url = URL.createObjectURL(file), img = new Image();
+      img.onload = () => {
+        const k = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement('canvas');
+        c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        let q = 0.85, dataUrl = c.toDataURL('image/jpeg', q);
+        while (dataUrl.length > 3000000 && q > 0.5) { q -= 0.1; dataUrl = c.toDataURL('image/jpeg', q); }
+        ok({ tipo: 'image/jpeg', base64: dataUrl.split(',')[1], dataUrl });
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); falha(new Error('Não foi possível abrir esta imagem. Tente uma foto JPG ou PNG.')); };
+      img.src = url;
+    });
+  }
+  // Campo de foto reutilizável: devolve {no, estado()} — estado: {foto, remover}
+  function campoFoto(rotulo, urlAtual, aoErro) {
+    let foto = null, remover = false;
+    const no = el('div', 'campo inteiro'); no.appendChild(el('label', '', rotulo));
+    const linha = el('div', 'cms-foto');
+    const prev = el('div', 'cms-prev'); const pi = el('img'); pi.alt = '';
+    const sem = el('span', '', 'Sem foto');
+    const mostrar = src => { prev.innerHTML = ''; if (src) { pi.src = src; prev.appendChild(pi); } else prev.appendChild(sem); bRem.hidden = !src; };
+    const inp = el('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.hidden = true;
+    const bEsc = el('button', 'btn sec peq', 'Escolher foto'); bEsc.type = 'button'; bEsc.addEventListener('click', () => inp.click());
+    const bRem = el('button', 'btn-excluir', 'Remover foto'); bRem.type = 'button';
+    bRem.addEventListener('click', () => { foto = null; remover = true; mostrar(''); });
+    inp.addEventListener('change', async () => {
+      if (!inp.files[0]) return;
+      try { foto = await reduzirImagem(inp.files[0], 1600); remover = false; mostrar(foto.dataUrl); } catch (e) { aoErro(e.message); }
+      inp.value = '';
+    });
+    const bts = el('div', 'acoes'); bts.append(bEsc, bRem);
+    linha.append(prev, bts, inp); no.appendChild(linha);
+    mostrar(urlAtual);
+    return { no, estado: () => ({ foto, remover }) };
+  }
+
+  async function carregarCms(pg) {
+    if (!podeSite(pg)) return;
+    const box = $('cms-' + pg), P = CMS_PAG[pg];
+    if (!box.dataset.montado) {
+      box.dataset.montado = '1';
+      const head = el('div', 'painel-head cms-head');
+      const tt = el('div'); tt.style.cssText = 'display:grid;gap:6px';
+      tt.append(el('span', 'eyebrow', 'Conteúdo do site'), el('h2', '', P.nome), el('p', 'nota', 'O que você salvar aqui aparece no site para todo mundo. Recarregue a página do site para ver.'));
+      const vs = el('div', 'acoes'); P.ver.forEach(([r, h]) => { const a = el('a', 'btn sec peq', r + ' ↗'); a.href = h; a.target = '_blank'; a.rel = 'noopener'; vs.appendChild(a); });
+      head.append(tt, vs);
+      const erro = el('div', 'aviso erro'); erro.hidden = true; erro.id = 'cms-erro-' + pg; erro.setAttribute('role', 'alert');
+      const corpo = el('div', 'cms-corpo'); corpo.id = 'cms-corpo-' + pg;
+      box.append(head, erro, corpo);
+    }
+    const corpo = $('cms-corpo-' + pg); corpo.innerHTML = ''; corpo.appendChild(el('div', 'vazio', 'Carregando…'));
+    try { cmsDados[pg] = await api('cmsPagina', { pagina: pg }); renderCms(pg); }
+    catch (e) { if (!e.sessao) { corpo.innerHTML = ''; corpo.appendChild(el('div', 'aviso erro', e.message)); } }
+  }
+
+  function renderCms(pg) {
+    const P = CMS_PAG[pg], D = cmsDados[pg], corpo = $('cms-corpo-' + pg), caixaErro = $('cms-erro-' + pg);
+    const erro = t => { caixaErro.textContent = t; caixaErro.hidden = false; };
+    corpo.innerHTML = ''; caixaErro.hidden = true;
+    // Textos da página
+    const ct = el('section', 'cartao cms-textos');
+    const hd = el('header'); hd.append(el('h3', '', 'Textos e capa'), el('p', '', 'Deixe em branco para manter o texto padrão do site.'));
+    ct.appendChild(hd);
+    const grade = el('div', 'grade'), campos = {}; let fotoCampo = null, fotoChave = '';
+    P.textos.forEach(([k, rot, tipo]) => {
+      if (tipo === 'img') { fotoCampo = campoFoto(rot, D.textos[k], erro); fotoChave = k; grade.appendChild(fotoCampo.no); return; }
+      const c = el('div', 'campo' + (tipo === 'area' ? ' inteiro' : ''));
+      const id = 'cmst-' + k.replace('.', '-'); const lab = el('label', '', rot); lab.htmlFor = id;
+      const inp = el(tipo === 'area' ? 'textarea' : 'input'); inp.id = id; inp.value = D.textos[k] || ''; if (tipo === 'area') inp.style.minHeight = '90px';
+      c.append(lab, inp); grade.appendChild(c); campos[k] = inp;
+    });
+    const ok = el('span', 'nota'); const bs = el('button', 'btn', 'Salvar textos'); bs.type = 'button';
+    bs.addEventListener('click', async () => {
+      const valores = {}; Object.keys(campos).forEach(k => { valores[k] = campos[k].value; });
+      const corpoReq = { pagina: pg, valores };
+      if (fotoCampo) { const st = fotoCampo.estado(); if (st.foto) corpoReq.foto = { campo: fotoChave, tipo: st.foto.tipo, base64: st.foto.base64 }; if (st.remover) corpoReq.remover = [fotoChave]; }
+      bs.disabled = true; bs.textContent = 'Salvando…'; caixaErro.hidden = true;
+      try { await api('cmsTextos', corpoReq); await carregarCms(pg); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      catch (e) { if (!e.sessao) erro(e.message); bs.disabled = false; bs.textContent = 'Salvar textos'; }
+    });
+    const ac = el('div', 'acoes'); ac.style.justifyContent = 'flex-end'; ac.append(ok, bs);
+    ct.append(grade, ac); corpo.appendChild(ct);
+    // Listas
+    P.colecoes.forEach(c => {
+      const C = CMS_COL[c], itens = D.colecoes[c] || [];
+      const sec = el('section', 'cms-col');
+      const h = el('div', 'cms-col-head'); h.appendChild(el('h3', '', C.nome + ' (' + itens.length + ')'));
+      const bn = el('button', 'btn peq', '+ Adicionar ' + C.um); bn.type = 'button'; bn.addEventListener('click', () => abrirCms(pg, c, null));
+      h.appendChild(bn); sec.appendChild(h);
+      const lst = el('div', 'cms-lista');
+      if (!itens.length) lst.appendChild(el('div', 'vazio', 'Nada aqui ainda. Clique em "+ Adicionar ' + C.um + '".'));
+      itens.forEach(i => {
+        const row = el('article', 'cms-item' + (i.visivel ? '' : ' oculto'));
+        const th = el('div', 'cms-thumb'); if (i.imagem) { const im = el('img'); im.src = i.imagem; im.alt = ''; im.loading = 'lazy'; th.appendChild(im); } else th.appendChild(el('span', '', 'sem foto'));
+        const [tit, sub] = C.linha(i);
+        const inf = el('div', 'cms-info'); const tb = el('b', '', tit || '(sem título)'); inf.appendChild(tb);
+        if (!i.visivel) tb.appendChild(el('span', 'pilula st-Recusado', 'Oculto'));
+        if (sub) inf.appendChild(el('span', 'nota', sub));
+        const acs = el('div', 'cms-acoes');
+        const be = el('button', 'btn sec peq', 'Editar'); be.type = 'button'; be.addEventListener('click', () => abrirCms(pg, c, i));
+        const bv = el('button', 'btn sec peq', i.visivel ? 'Ocultar' : 'Mostrar'); bv.type = 'button';
+        bv.addEventListener('click', async () => {
+          bv.disabled = true;
+          try { await api('cmsSalvar', { colecao: c, item: { id: i.id, visivel: !i.visivel } }); await carregarCms(pg); }
+          catch (e) { if (!e.sessao) erro(e.message); bv.disabled = false; }
+        });
+        const bx = el('button', 'btn-excluir', 'Excluir'); bx.type = 'button';
+        bx.addEventListener('click', () => confirmarEExecutar(bx, 'Confirmar exclusão', async () => { await api('cmsExcluir', { colecao: c, id: i.id }); await carregarCms(pg); }, caixaErro));
+        acs.append(be, bv, bx);
+        row.append(th, inf, acs); lst.appendChild(row);
+      });
+      sec.appendChild(lst); corpo.appendChild(sec);
+    });
+  }
+
+  let cmsAtual = null;
+  function abrirCms(pg, c, item) {
+    const C = CMS_COL[c], box = $('cms-campos'), err = $('cms-erro');
+    const erro = t => { err.textContent = t; err.hidden = false; };
+    box.innerHTML = ''; err.hidden = true;
+    $('cms-titulo').textContent = (item ? 'Editar ' : 'Adicionar ') + C.um;
+    const ent = {}; let foto = null;
+    C.campos.forEach(([k, rot, tipo, obr, ops]) => {
+      if (tipo === 'img') { foto = campoFoto(rot, item ? item.imagem : '', erro); box.appendChild(foto.no); return; }
+      const cp = el('div', 'campo' + (tipo === 'area' || tipo === 'url' || (tipo === 'txt' && obr) ? ' inteiro' : ''));
+      const id = 'cmsf-' + k; const lab = el('label', '', rot + (obr ? '' : '')); lab.htmlFor = id;
+      let inp;
+      if (tipo === 'sel') { inp = el('select'); ops.forEach(o => { const op = el('option', '', o === 'Foto' ? 'Foto da galeria' : o); op.value = o; inp.appendChild(op); }); }
+      else if (tipo === 'area') { inp = el('textarea'); inp.style.minHeight = '100px'; }
+      else { inp = el('input'); inp.type = tipo === 'data' ? 'date' : tipo === 'num' ? 'number' : 'text'; if (tipo === 'url') inp.placeholder = 'https://'; }
+      inp.id = id;
+      inp.value = item ? (item[k] == null || (tipo === 'num' && !item[k]) ? '' : item[k]) : (tipo === 'data' ? new Date().toISOString().slice(0, 10) : '');
+      if (tipo === 'sel' && !inp.value) inp.value = ops[0];
+      cp.append(lab, inp); box.appendChild(cp); ent[k] = { inp, obr, rot };
+    });
+    cmsAtual = { pg, c, item, ent, foto, erro };
+    $('dlg-cms').showModal();
+  }
+  $('cms-fechar').addEventListener('click', () => $('dlg-cms').close());
+  $('f-cms').addEventListener('submit', async e => {
+    e.preventDefault();
+    const { pg, c, item, ent, foto, erro } = cmsAtual;
+    const novo = item ? { id: item.id } : {};
+    for (const k of Object.keys(ent)) {
+      const v = ent[k].inp.value.trim();
+      if (ent[k].obr && !v) return erro('Preencha: ' + ent[k].rot + '.');
+      novo[k] = v;
+    }
+    const req = { colecao: c, item: novo };
+    if (foto) { const st = foto.estado(); if (st.foto) req.foto = { tipo: st.foto.tipo, base64: st.foto.base64 }; if (st.remover) req.removerImagem = true; }
+    const b = $('cms-salvar'); b.disabled = true; b.textContent = 'Salvando…';
+    try { await api('cmsSalvar', req); $('dlg-cms').close(); await carregarCms(pg); }
+    catch (err) { if (!err.sessao) erro(err.message); }
+    finally { b.disabled = false; b.textContent = 'Salvar'; }
+  });
 
   /* ---------- Eventos internos e chamada (Presidência e Gestão de Pessoas) ---------- */
   let eventos = [], eventoAtual = null, chamada = [], chamadaOriginal = {};

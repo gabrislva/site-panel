@@ -15,6 +15,7 @@ Custo: R$ 0.
 ├── sobre.html        ← Sobre nós
 ├── esportes.html     ← Esportes
 ├── eventos.html      ← Eventos
+├── parcerias.html    ← Parcerias
 ├── contato.html      ← Contato (formulário que manda e-mail)
 ├── membros.html      ← Área do membro
 ├── config.js         ← URL da API, nome e logo
@@ -42,6 +43,7 @@ Custo: R$ 0.
    | **Categorias e projetos** | Listas do formulário de reembolso: categorias na coluna A, projetos/setores na coluna B |
    | **Itens · Vendas · Compras** | Estoque e vendas |
    | **Eventos · Presenças** | Eventos internos e lista de presença |
+   | **Site · …** (7 abas) | Textos, notícias, Sobre nós, eventos, treinos, resultados e parcerias das páginas públicas |
 
 4. Vá em **Implantar → Nova implantação → App da Web**, com *Executar como: **Eu*** e *Quem pode acessar: **Qualquer pessoa***. Copie a URL que termina em `/exec`.
 
@@ -184,6 +186,24 @@ Ficam nas abas **Eventos** e **Presenças** da planilha do Portal, criadas ao ro
 
 Cada membro vê no Início a própria contagem: presenças, faltas e justificadas. A partir de 3 faltas, o quadro fica em destaque. **Justificou** não conta como falta, mas também não conta como presença no ranking.
 
+## Conteúdo do site pelo painel
+
+As páginas públicas agora podem ser editadas pela Área do membro, sem mexer no GitHub:
+
+| Aba do painel | Quem usa | O que edita |
+|---|---|---|
+| **Site: Início e Sobre** | Presidência e Marketing | Foto de capa e textos do Início, **notícias** (postar, editar, ocultar, excluir), artigos e galeria de fotos do Sobre nós |
+| **Site: Eventos** | Presidência e Eventos | Eventos da página Eventos, com foto. Os que já passaram vão sozinhos para "Eventos anteriores" |
+| **Site: Esportes** | Presidência e Esportes | **Treinos** (modalidade, dias e horários, local, foto) e **resultados de campeonatos** |
+| **Site: Parcerias** | Presidência e Comercial | Parceiros com logo ou foto, texto dos benefícios e link. **Ocultar** tira do site sem apagar |
+
+Como funciona:
+
+- As fotos são reduzidas no navegador e guardadas na pasta **Portal — Fotos do site** do Drive.
+- Em *Textos e capa*, campo em branco = o site usa o texto do `conteudo.js`.
+- Cada lista (notícias, eventos…) continua vindo do `conteudo.js` **até a primeira vez** que alguém adicionar ou excluir algo nela pelo painel. A partir daí, vale só o que está na planilha. Os **números** do Início, o **Contato** e as **redes** continuam no `conteudo.js`.
+- O site mostra a última versão guardada no navegador e atualiza sozinho em seguida. Depois de salvar no painel, é só recarregar a página do site.
+
 ## Próximas funções
 
-O portal foi montado para crescer. Cada nova função vira mais um item no menu lateral (como *Pedir reembolso*) e mais uma ação no `Code.gs`. Exemplos que encaixam bem: controle de caixa, cadastro de patrocinadores.
+O portal foi montado para crescer. Cada nova função vira mais um item no menu lateral (como *Pedir reembolso*) e mais uma ação no `Code.gs`. Exemplos que encaixam bem: controle de caixa, inscrições em eventos.
